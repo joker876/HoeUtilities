@@ -47,23 +47,23 @@ export default function getCollections (firstLoad) {
             const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
             const counter = heldItem.getInteger('mined_crops')
             if (heldItem.getString('id').match(/HOE_CANE/)) {
-                if (global.hoeutils.collections.cane.API != profile.collection.SUGAR_CANE || firstLoad || global.collection.cane.counter == 0) {
+                if (global.hoeutils.collections.cane.API != profile.collection.SUGAR_CANE || firstLoad || global.hoeutils.collections.cane.counter == 0) {
                     global.hoeutils.collections.cane.counter = counter
                 }
             } else if (heldItem.getString('id').match(/HOE_POTATO/)) {
-                if (global.hoeutils.collections.potato.API != profile.collection.POTATO_ITEM || firstLoad || global.collection.potato.counter == 0) {
+                if (global.hoeutils.collections.potato.API != profile.collection.POTATO_ITEM || firstLoad || global.hoeutils.collections.potato.counter == 0) {
                     global.hoeutils.collections.potato.counter = counter
                 }
             } else if (heldItem.getString('id').match(/HOE_CARROT/)) {
-                if (global.hoeutils.collections.carrot.API != profile.collection.CARROT_ITEM || firstLoad || global.collection.carrot.counter == 0) {
+                if (global.hoeutils.collections.carrot.API != profile.collection.CARROT_ITEM || firstLoad || global.hoeutils.collections.carrot.counter == 0) {
                     global.hoeutils.collections.carrot.counter = counter
                 }
             } else if (heldItem.getString('id').match(/HOE_WHEAT/)) {
-                if (global.hoeutils.collections.wheat.API != profile.collection.WHEAT || firstLoad || global.collection.wheat.counter == 0) {
+                if (global.hoeutils.collections.wheat.API != profile.collection.WHEAT || firstLoad || global.hoeutils.collections.wheat.counter == 0) {
                     global.hoeutils.collections.wheat.counter = counter
                 }
             } else if (heldItem.getString('id').match(/HOE_WARTS/)) {
-                if (global.hoeutils.collections.wart.API != profile.collection.NETHER_STALK || firstLoad || global.collection.wart.counter == 0) {
+                if (global.hoeutils.collections.wart.API != profile.collection.NETHER_STALK || firstLoad || global.hoeutils.collections.wart.counter == 0) {
                     global.hoeutils.collections.wart.counter = counter
                 }
             }

@@ -1,4 +1,4 @@
-import { dataFileStructure, skillCurves } from './helperFunctions/constants'
+import { dataFileStructure, skillCurves, collections } from './helperFunctions/constants'
 
 const data = JSON.parse(FileLib.read('hoeutilities', './data.json'));
 console.log('initial data: ', JSON.stringify(data));
@@ -20,6 +20,10 @@ global.hoeutils.timerDisplay = new Display()
     .setBackground('full')
     .setBackgroundColor(Renderer.color(0, 0, 0, 0));
 
+if (!global.hoeutils.collections) {
+    global.hoeutils.collections = collections;
+}
+
 import { initiateGuiMover, guiMover } from './features/guiMover';
 import { getElephantLevel } from './helperFunctions/getElephantLevel';
 import initiateSettings from './features/settings';
@@ -36,7 +40,7 @@ register('playerInteract', hoeLock);
 import { apiKeyGrabber, apiKeyChatCriteria } from './features/apiKeyGrabber';
 import { commandHandler } from './features/commandHandler';
 import { updateColorSettings, updateUserSettings, updateImageData, updateScale } from './helperFunctions/tickUpdates';
-import { calculateCollection, calculateXpGain, calcSkillProgress, getColorInRange, makeLabel, addCommas, getMaxEfficiencyYield, produceAllLines } from './helperFunctions/smallFunctions';
+import { calculateXpGain, calcSkillProgress, produceAllLines } from './helperFunctions/smallFunctions';
 import getCollections from './helperFunctions/getCollections';
 import { standardImages, timerImage } from './helperFunctions/renderOverlays';
 
@@ -62,20 +66,20 @@ register('renderOverlay', timerImage);
 register('step', () => {
     FileLib.write('hoeutilities', './data.json', JSON.stringify(global.hoeutils.data));
     const counter = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes').getInteger('mined_crops')
-    if (global.collection.cane.counter == 0) {
-        global.collection.cane.counter = counter;
+    if (global.hoeutils.collections.cane.counter == 0) {
+        global.hoeutils.collections.cane.counter = counter;
     }
-    if (global.collection.potato.counter == 0) {
-        global.collection.potato.counter = counter;
+    if (global.hoeutils.collections.potato.counter == 0) {
+        global.hoeutils.collections.potato.counter = counter;
     }
-    if (global.collection.carrot.counter == 0) {
-        global.collection.carrot.counter = counter;
+    if (global.hoeutils.collections.carrot.counter == 0) {
+        global.hoeutils.collections.carrot.counter = counter;
     }
-    if (global.collection.wheat.counter == 0) {
-        global.collection.wheat.counter = counter;
+    if (global.hoeutils.collections.wheat.counter == 0) {
+        global.hoeutils.collections.wheat.counter = counter;
     }
-    if (global.collection.potato.counter == 0) {
-        global.collection.potato.counter = counter;
+    if (global.hoeutils.collections.potato.counter == 0) {
+        global.hoeutils.collections.potato.counter = counter;
     }
 }).setDelay(1);
 
@@ -134,7 +138,6 @@ if (hasSkyblockAddons) {
 
 register("tick", () => {
     const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
-    const counter = heldItem.getInteger('mined_crops');
     
     let displayLines = [];
     
@@ -148,7 +151,6 @@ register("tick", () => {
     
     if (heldItem.getString('id').match(/HOE_CANE/)) {
         global.hoeutils.display.setShouldRender(true)
-        let cropRate
         displayLines = produceAllLines('cane')
     } else if (heldItem.getString('id').match(/HOE_POTATO/)) {
         global.hoeutils.display.setShouldRender(true)
@@ -161,7 +163,7 @@ register("tick", () => {
         displayLines = produceAllLines('wheat')
     } else if (heldItem.getString('id').match(/HOE_WARTS/)) {
         global.hoeutils.display.setShouldRender(true)
-        displayLines = produceAllLines('warts', { farmingLevel=false, hourlyGain=false });
+        displayLines = produceAllLines('warts', { farmingLevel: true, hourlyGain: true });
         ////////////////////////////////////////////////////////////
     /* } else if (heldItem.getString('id').match(/COCO_CHOPPER/)) {
         global.hoeutils.display.setShouldRender(true)

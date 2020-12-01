@@ -2,10 +2,6 @@ import { baseCropDrops, collections } from './constants';
 import getCollections from './getCollections';
 import getCropRate from './getCropRate';
 
-if (!global.hoeutils.collections) {
-    global.hoeutils.collections = collections;
-}
-
 export function calculateCollection(crop, counter) {
     if (!global.hoeutils.data.key) return '&cEnter &fAPI key';
     if (global.hoeutils.isCollectionError) {
@@ -64,14 +60,15 @@ export function getMaxEfficiencyYield(cropRate, crop, replenishModif = 0) {
 export function makeTimer(seconds, charsFromStart, amountOfChars) {
     return new Date(seconds * 1000).toISOString().substr(charsFromStart ?? 14, amountOfChars ?? 5);
 }
-export function produceAllLines(crop, settings) {
+export function produceAllLines(crop, settings = {}) {
+    const counter = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes').getInteger('mined_crops');
     let cropRate = 0, displayLines = []
-    if ((settings.counter || settings.cropRate) && (global.hoeutils.userSettings.isCropRateEnabled || global.hoeutils.userSettings.isMaxEfficiencyEnabled)) cropRate = getCropRate()
-    if (settings.counter && (global.hoeutils.userSettings.isCounterEnabled)) displayLines.push(new DisplayLine(makeLabel(crop, 'counter') + addCommas(counter)));
-    if (settings.cropRate && (global.hoeutils.userSettings.isCropRateEnabled)) displayLines.push(new DisplayLine(makeLabel(crop) + (global.hoeutils.farmingLevel ? cropRate + '%' : '&cHarvest crops...')));
-    if (settings.maxEff && (global.hoeutils.userSettings.isMaxEfficiencyEnabled)) displayLines.push(new DisplayLine(makeLabel(crop, 'max_efficiency') + (global.hoeutils.farmingLevel ? getMaxEfficiencyYield(cropRate, crop, 0) : '&cHarvest crops...')));
-    if (settings.hourlyGain && (global.hoeutils.userSettings.isHourlyXpGainEnabled)) displayLines.push(new DisplayLine(makeLabel(crop, 'max_exp') + (global.hoeutils.hourlyXpGain ? ('+' + addCommas(global.hoeutils.hourlyXpGain) + ' XP/h') : '&cHarvest crops...')));
-    if (settings.farmingLevel && (global.hoeutils.userSettings.isFarmingLevelEnabled)) displayLines.push(new DisplayLine(makeLabel(crop, 'level') + (global.hoeutils.farmingLevel ? ((global.hoeutils.farmingLevel ? (global.hoeutils.farmingLevel + ` &f(${getColorInRange(global.hoeutils.farmingLevelProgress)}${global.hoeutils.farmingLevelProgress}%&f)`) : '&cHarvest crops...')) : '&cHarvest crops...')));
-    if (settings.collection && (global.hoeutils.userSettings.isCollectionEnabled)) displayLines.push(new DisplayLine(makeLabel(crop, 'collection') + addCommas(calculateCollection(crop, counter))));
+    if ((!settings.counter || !settings.cropRate) && (global.hoeutils.userSettings.isCropRateEnabled || global.hoeutils.userSettings.isMaxEfficiencyEnabled)) cropRate = getCropRate()
+    if (!settings.counter && (global.hoeutils.userSettings.isCounterEnabled)) displayLines.push(new DisplayLine(makeLabel(crop, 'counter') + addCommas(counter)));
+    if (!settings.cropRate && (global.hoeutils.userSettings.isCropRateEnabled)) displayLines.push(new DisplayLine(makeLabel(crop) + (global.hoeutils.farmingLevel ? cropRate + '%' : '&cHarvest crops...')));
+    if (!settings.maxEff && (global.hoeutils.userSettings.isMaxEfficiencyEnabled)) displayLines.push(new DisplayLine(makeLabel(crop, 'max_efficiency') + (global.hoeutils.farmingLevel ? getMaxEfficiencyYield(cropRate, crop, 0) : '&cHarvest crops...')));
+    if (!settings.hourlyGain && (global.hoeutils.userSettings.isHourlyXpGainEnabled)) displayLines.push(new DisplayLine(makeLabel(crop, 'max_exp') + (global.hoeutils.hourlyXpGain ? ('+' + addCommas(global.hoeutils.hourlyXpGain) + ' XP/h') : '&cHarvest crops...')));
+    if (!settings.farmingLevel && (global.hoeutils.userSettings.isFarmingLevelEnabled)) displayLines.push(new DisplayLine(makeLabel(crop, 'level') + (global.hoeutils.farmingLevel ? ((global.hoeutils.farmingLevel ? (global.hoeutils.farmingLevel + ` &f(${getColorInRange(global.hoeutils.farmingLevelProgress)}${global.hoeutils.farmingLevelProgress}%&f)`) : '&cHarvest crops...')) : '&cHarvest crops...')));
+    if (!settings.collection && (global.hoeutils.userSettings.isCollectionEnabled)) displayLines.push(new DisplayLine(makeLabel(crop, 'collection') + addCommas(calculateCollection(crop, counter))));
     return displayLines;
 }
