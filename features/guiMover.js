@@ -48,20 +48,6 @@ export function initiateGuiMover() {
     global.hoeutils.gui.registerMouseDragged(dragFunc);
     global.hoeutils.gui.registerClicked(clickFunc);
     global.hoeutils.gui.registerMouseReleased(releaseFunc);
-
-    //timer display
-    /* 
-
-    function dragFuncTimer(mouseX, mouseY) {
-        if (!isTimerSelected) return;
-    }
-
-    function releaseFuncTimer() {
-    }
-
-    global.hoeutils.timerGui.registerMouseDragged(dragFuncTimer);
-    global.hoeutils.timerGui.registerClicked(clickFunc);
-    global.hoeutils.timerGui.registerMouseReleased(releaseFuncTimer); */
 }
 export function guiMover() {
     if (global.hoeutils.gui.isOpen()) {

@@ -64,7 +64,7 @@ export function updateImageData() {
         global.hoeutils.timerDisplay.setShouldRender(false)
         return
     }
-    const sampleTimestamp = 1606691689
+    const sampleTimestamp = 1606691600
     const timestamp = Math.floor(Date.now() / 1000)
     const secondsRemaining = 3600 + (sampleTimestamp - timestamp) % 3600
     const settingsNum = Number(settings.getSetting('Timer', 'Remind how long before the event starts? &8in seconds'))
@@ -80,8 +80,6 @@ export function updateImageData() {
     if (secondsRemaining >= 2400) global.hoeutils.timerDisplay.setLine(0, new DisplayLine(`&aNOW`).setShadow(true))
     else global.hoeutils.timerDisplay.setLine(0, new DisplayLine(`${global.hoeutils.colorSettings.timer}${makeTimer(secondsRemaining)}`).setShadow(true))
     global.hoeutils.timerDisplay.setShouldRender(true)
-
-
 
     //main
     function countActiveModules() {
@@ -140,8 +138,3 @@ export function updateImageData() {
             break;
     }
 }
-/* export function updateApiErrorTimer() {
-    if (global.hoeutils.isCollectionError) {
-        global.hoeutils.isCollectionError--;
-    }
-} */

@@ -6,8 +6,7 @@ if (!data) {
     console.log(true);
     FileLib.write('hoeutilities', './data.json', JSON.stringify(dataFileStructure));
 }
-global.hoeutils = {}
-global.hoeutils.data = data;
+global.hoeutils = { data };
 
 global.hoeutils.gui = new Gui();
 global.hoeutils.display = new Display()
@@ -37,9 +36,8 @@ register('playerInteract', hoeLock);
 import { apiKeyGrabber, apiKeyChatCriteria } from './features/apiKeyGrabber';
 import { commandHandler } from './features/commandHandler';
 import { updateColorSettings, updateUserSettings, updateImageData, updateScale } from './helperFunctions/tickUpdates';
-import { calculateCollection, calculateXpGain, calcSkillProgress, getColorInRange, makeLabel, addCommas, getMaxEfficiencyYield } from './helperFunctions/smallFunctions';
+import { calculateCollection, calculateXpGain, calcSkillProgress, getColorInRange, makeLabel, addCommas, getMaxEfficiencyYield, produceAllLines } from './helperFunctions/smallFunctions';
 import getCollections from './helperFunctions/getCollections';
-import getCropRate from './helperFunctions/getCropRate';
 import { standardImages, timerImage } from './helperFunctions/renderOverlays';
 
 updateColorSettings();
@@ -62,9 +60,23 @@ register('renderOverlay', standardImages);
 register('renderOverlay', timerImage);
 
 register('step', () => {
-    console.log(JSON.stringify(global.hoeutils.data.key));
     FileLib.write('hoeutilities', './data.json', JSON.stringify(global.hoeutils.data));
-    //console.log(JSON.stringify(JSON.parse(FileLib.read('hoeutilities', './data.json'))));
+    const counter = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes').getInteger('mined_crops')
+    if (global.collection.cane.counter == 0) {
+        global.collection.cane.counter = counter;
+    }
+    if (global.collection.potato.counter == 0) {
+        global.collection.potato.counter = counter;
+    }
+    if (global.collection.carrot.counter == 0) {
+        global.collection.carrot.counter = counter;
+    }
+    if (global.collection.wheat.counter == 0) {
+        global.collection.wheat.counter = counter;
+    }
+    if (global.collection.potato.counter == 0) {
+        global.collection.potato.counter = counter;
+    }
 }).setDelay(1);
 
 //actionbar info
@@ -93,7 +105,6 @@ register('actionbar', () => {
         }
     })
     calculateXpGain(gained);
-    /* inactivityTimer = 0; */
 }).setCriteria('${*}+${gained} Farming (${total}/${next})${*}')
 
 // actionbar trigger for SBA
@@ -118,7 +129,6 @@ if (hasSkyblockAddons) {
             }
         })
         calculateXpGain(gained);
-        /* if (gained) inactivityTimer = 0; */
     })
 }
 
@@ -139,58 +149,19 @@ register("tick", () => {
     if (heldItem.getString('id').match(/HOE_CANE/)) {
         global.hoeutils.display.setShouldRender(true)
         let cropRate
-        if (global.hoeutils.userSettings.isCropRateEnabled || global.hoeutils.userSettings.isMaxEfficiencyEnabled) cropRate = getCropRate()
-        if (global.hoeutils.userSettings.isCounterEnabled) displayLines.push(new DisplayLine(makeLabel('cane', 'counter') + addCommas(counter)));
-        if (global.hoeutils.userSettings.isCropRateEnabled) displayLines.push(new DisplayLine(makeLabel('cane') + cropRate + '%'))
-        if (global.hoeutils.userSettings.isMaxEfficiencyEnabled) displayLines.push(new DisplayLine(makeLabel('cane', 'max_efficiency') + getMaxEfficiencyYield(cropRate, 'cane', 0)))
-        if (global.hoeutils.userSettings.isHourlyXpGainEnabled) displayLines.push(new DisplayLine(makeLabel('cane', 'max_exp') + (global.hoeutils.hourlyXpGain ? ('+' + addCommas(global.hoeutils.hourlyXpGain) + ' XP/h') : '&cHarvest crops...')))
-        if (global.hoeutils.userSettings.isFarmingLevelEnabled) displayLines.push(new DisplayLine(makeLabel('cane', 'level') + (global.hoeutils.farmingLevel ? ((global.hoeutils.farmingLevel ? (global.hoeutils.farmingLevel + ` &f(${getColorInRange(global.hoeutils.farmingLevelProgress)}${global.hoeutils.farmingLevelProgress}%&f)`) : '&cHarvest crops...')) : '&cHarvest crops...')));
-        if (global.hoeutils.userSettings.isCollectionEnabled) displayLines.push(new DisplayLine(makeLabel('cane', 'collection') + addCommas(calculateCollection('cane', counter))));
-    
+        displayLines = produceAllLines('cane')
     } else if (heldItem.getString('id').match(/HOE_POTATO/)) {
         global.hoeutils.display.setShouldRender(true)
-        let cropRate
-        if (global.hoeutils.userSettings.isCropRateEnabled || global.hoeutils.userSettings.isMaxEfficiencyEnabled) cropRate = getCropRate()
-        if (global.hoeutils.userSettings.isCounterEnabled) displayLines.push(new DisplayLine(makeLabel('potato', 'counter') + addCommas(counter)))
-        if (global.hoeutils.userSettings.isCropRateEnabled) displayLines.push(new DisplayLine(makeLabel('potato') + cropRate + '%'))
-        if (global.hoeutils.userSettings.isMaxEfficiencyEnabled) displayLines.push(new DisplayLine(makeLabel('potato', 'max_efficiency') + getMaxEfficiencyYield(cropRate, 'potato', 1)))
-        if (global.hoeutils.userSettings.isHourlyXpGainEnabled) displayLines.push(new DisplayLine(makeLabel('potato', 'max_exp') + (global.hoeutils.hourlyXpGain ? ('+' + addCommas(global.hoeutils.hourlyXpGain) + ' XP/h') : '&cHarvest crops...')))
-        if (global.hoeutils.userSettings.isFarmingLevelEnabled) displayLines.push(new DisplayLine(makeLabel('potato', 'level') + (global.hoeutils.farmingLevel ? (global.hoeutils.farmingLevel + ` &f(${getColorInRange(global.hoeutils.farmingLevelProgress)}${global.hoeutils.farmingLevelProgress}%&f)`) : '&cHarvest crops...')));
-        if (global.hoeutils.userSettings.isCollectionEnabled) displayLines.push(new DisplayLine(makeLabel('potato', 'collection') + addCommas(calculateCollection('potato', counter))));
-    
+        displayLines = produceAllLines('potato')
     } else if (heldItem.getString('id').match(/HOE_CARROT/)) {
         global.hoeutils.display.setShouldRender(true)
-        let cropRate
-        if (global.hoeutils.userSettings.isCropRateEnabled || global.hoeutils.userSettings.isMaxEfficiencyEnabled) cropRate = getCropRate()
-        if (global.hoeutils.userSettings.isCounterEnabled) displayLines.push(new DisplayLine(makeLabel('carrot', 'counter') + addCommas(counter)))
-        if (global.hoeutils.userSettings.isCropRateEnabled) displayLines.push(new DisplayLine(makeLabel('carrot') + cropRate + '%'))
-        if (global.hoeutils.userSettings.isMaxEfficiencyEnabled) displayLines.push(new DisplayLine(makeLabel('carrot', 'max_efficiency') + getMaxEfficiencyYield(cropRate, 'carrot', 1)))
-        if (global.hoeutils.userSettings.isHourlyXpGainEnabled) displayLines.push(new DisplayLine(makeLabel('carrot', 'max_exp') + (global.hoeutils.hourlyXpGain ? ('+' + addCommas(global.hoeutils.hourlyXpGain) + ' XP/h') : '&cHarvest crops...')))
-        if (global.hoeutils.userSettings.isFarmingLevelEnabled) displayLines.push(new DisplayLine(makeLabel('carrot', 'level') + (global.hoeutils.farmingLevel ? (global.hoeutils.farmingLevel + ` &f(${getColorInRange(global.hoeutils.farmingLevelProgress)}${global.hoeutils.farmingLevelProgress}%&f)`) : '&cHarvest crops...')));
-        if (global.hoeutils.userSettings.isCollectionEnabled) displayLines.push(new DisplayLine(makeLabel('carrot', 'collection') + addCommas(calculateCollection('carrot', counter))));
-    
+        displayLines = produceAllLines('carrot')
     } else if (heldItem.getString('id').match(/HOE_WHEAT/)) {
         global.hoeutils.display.setShouldRender(true)
-        let cropRate
-        if (global.hoeutils.userSettings.isCropRateEnabled || global.hoeutils.userSettings.isMaxEfficiencyEnabled) cropRate = getCropRate()
-        if (global.hoeutils.userSettings.isCounterEnabled) displayLines.push(new DisplayLine(makeLabel('wheat', 'counter') + addCommas(counter)))
-        if (global.hoeutils.userSettings.isCropRateEnabled) displayLines.push(new DisplayLine(makeLabel('wheat') + cropRate + '%'))
-        if (global.hoeutils.userSettings.isMaxEfficiencyEnabled) displayLines.push(new DisplayLine(makeLabel('wheat', 'max_efficiency') + getMaxEfficiencyYield(cropRate, 'wheat', 0)))
-        if (global.hoeutils.userSettings.isHourlyXpGainEnabled) displayLines.push(new DisplayLine(makeLabel('wheat', 'max_exp') + (global.hoeutils.hourlyXpGain ? ('+' + addCommas(global.hoeutils.hourlyXpGain) + ' XP/h') : '&cHarvest crops...')))
-        if (global.hoeutils.userSettings.isFarmingLevelEnabled) displayLines.push(new DisplayLine(makeLabel('wheat', 'level') + (global.hoeutils.farmingLevel ? (global.hoeutils.farmingLevel + ` &f(${getColorInRange(global.hoeutils.farmingLevelProgress)}${global.hoeutils.farmingLevelProgress}%&f)`) : '&cHarvest crops...')));
-        if (global.hoeutils.userSettings.isCollectionEnabled) displayLines.push(new DisplayLine(makeLabel('wheat', 'collection') + addCommas(calculateCollection('wheat', counter))));
-    
+        displayLines = produceAllLines('wheat')
     } else if (heldItem.getString('id').match(/HOE_WARTS/)) {
         global.hoeutils.display.setShouldRender(true)
-        let cropRate
-        if (global.hoeutils.userSettings.isCropRateEnabled || global.hoeutils.userSettings.isMaxEfficiencyEnabled) cropRate = getCropRate()
-        if (global.hoeutils.userSettings.isCounterEnabled) displayLines.push(new DisplayLine(makeLabel('wart', 'counter') + addCommas(counter)).setShadow(true).setScale(scale))
-        if (global.hoeutils.userSettings.isCropRateEnabled) displayLines.push(new DisplayLine(makeLabel('wart') + cropRate + '%'))
-        if (global.hoeutils.userSettings.isMaxEfficiencyEnabled) displayLines.push(new DisplayLine(makeLabel('wart', 'max_efficiency') + getMaxEfficiencyYield(cropRate, 'wart', 1)))
-        //if (global.hoeutils.userSettings.isHourlyXpGainEnabled) displayLines.push(new DisplayLine(makeLabel('wart', 'max_exp') + (global.hoeutils.hourlyXpGain ? ('+' + addCommas(global.hoeutils.hourlyXpGain) + ' XP/h') : '&cHarvest crops...')))
-        //if (global.hoeutils.userSettings.isFarmingLevelEnabled) displayLines.push(new DisplayLine(makeLabel('wart', 'level') + (global.hoeutils.farmingLevel ? (global.hoeutils.farmingLevel + ` &f(${getColorInRange(global.hoeutils.farmingLevelProgress)}${global.hoeutils.farmingLevelProgress}%&f)`) : '&cHarvest crops...')));
-        if (global.hoeutils.userSettings.isCollectionEnabled) displayLines.push(new DisplayLine(makeLabel('wart', 'collection') + addCommas(calculateCollection('wart', counter))));
-    
+        displayLines = produceAllLines('warts', { farmingLevel=false, hourlyGain=false });
         ////////////////////////////////////////////////////////////
     /* } else if (heldItem.getString('id').match(/COCO_CHOPPER/)) {
         global.hoeutils.display.setShouldRender(true)
