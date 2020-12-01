@@ -100,7 +100,7 @@ try {
 }
 export { skillTextField, skillField, renderListener };
 
-register('actionbar', () => {
+register('actionbar', (gained, total, next) => {
     global.hoeutils.farmingLevelProgress = calcSkillProgress(total, next);
     
     skillCurves.forEach((level, i) => {
