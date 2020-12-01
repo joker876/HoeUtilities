@@ -1,0 +1,9 @@
+{
+	"name":"HoeUtilities",
+	"author": "joker876",
+	"description": "Provides various utility features to SkyBlock hoes",
+	"helpMessage": "&cType &a&l/hoeutils &r&cto open settings.",
+	"version": "2.3.0",
+	"requires": [ "SettingsManager", "requestV2", "Promise"],
+	"entry": "index.js"
+}
