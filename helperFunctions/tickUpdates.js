@@ -56,7 +56,6 @@ export function updateImageData() {
         size: 14 * global.hoeutils.scale,
         yOffset: -4 * global.hoeutils.scale
     }
-    let wasEventReminderDisplayed = false;
     if (!global.hoeutils.userSettings.isEventTimerEnabled) {
         global.hoeutils.timerDisplay.setShouldRender(false)
         return
@@ -70,12 +69,12 @@ export function updateImageData() {
     const secondsRemaining = 3600 + (sampleTimestamp - timestamp) % 3600
     const settingsNum = Number(settings.getSetting('Timer', 'Remind how long before the event starts? &8in seconds'))
 
-    if (secondsRemaining == settingsNum && !wasEventReminderDisplayed) {
-        wasEventReminderDisplayed = true;
+    if (secondsRemaining == settingsNum && !global.hoeutils.wasEventReminderDisplayed) {
+        global.hoeutils.wasEventReminderDisplayed = true;
         new Message(`&a[HoeUtilities] &e&nJacob\'s Farming Contest&r&e is starting in &c${settingsNum} seconds&e!`).chat();
         World.playSound('mob.villager.idle', 1000, 1);
         setTimeout(() => {
-            wasEventReminderDisplayed = false;
+            global.hoeutils.wasEventReminderDisplayed = false;
         }, 1100); 
     }
     if (secondsRemaining >= 2400) global.hoeutils.timerDisplay.setLine(0, new DisplayLine(`&aNOW`).setShadow(true))
