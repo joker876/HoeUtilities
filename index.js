@@ -1,10 +1,9 @@
 import { dataFileStructure, skillCurves, collections } from './helperFunctions/constants'
 
-const data = JSON.parse(FileLib.read('hoeutilities', './data.json'));
-console.log('initial data: ', JSON.stringify(data));
+let data = JSON.parse(FileLib.read('hoeutilities', './data.json'));
 if (!data) {
-    console.log(true);
     FileLib.write('hoeutilities', './data.json', JSON.stringify(dataFileStructure));
+    data = JSON.parse(FileLib.read('hoeutilities', './data.json'));
 }
 global.hoeutils = { data };
 

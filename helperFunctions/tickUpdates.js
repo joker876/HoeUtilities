@@ -11,9 +11,9 @@ global.hoeutils.colorSettings = {
     carrot: colors[settings.getSetting('Colors', 'Carrot')],
     wart: colors[settings.getSetting('Colors', 'Nether Wart')],
     wheat: colors[settings.getSetting('Colors', 'Wheat')],
-    pumpkin: colors[settings.getSetting('Colors', 'Pumpkin')],
+    /* pumpkin: colors[settings.getSetting('Colors', 'Pumpkin')],
     melon: colors[settings.getSetting('Colors', 'Melon')],
-    cocoa: colors[settings.getSetting('Colors', 'Cocoa')],
+    cocoa: colors[settings.getSetting('Colors', 'Cocoa')], */
 }
 export function updateColorSettings() {
     global.hoeutils.colorSettings = {
@@ -25,9 +25,9 @@ export function updateColorSettings() {
         carrot: colors[settings.getSetting('Colors', 'Carrot')],
         wart: colors[settings.getSetting('Colors', 'Nether Wart')],
         wheat: colors[settings.getSetting('Colors', 'Wheat')],
-        pumpkin: colors[settings.getSetting('Colors', 'Pumpkin')],
+        /* pumpkin: colors[settings.getSetting('Colors', 'Pumpkin')],
         melon: colors[settings.getSetting('Colors', 'Melon')],
-        cocoa: colors[settings.getSetting('Colors', 'Cocoa')],
+        cocoa: colors[settings.getSetting('Colors', 'Cocoa')], */
     }
 }
 export function updateUserSettings() {

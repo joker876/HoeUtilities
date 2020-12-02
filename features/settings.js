@@ -77,9 +77,9 @@ export default function initiateSettings() {
             new Setting.StringSelector('Carrot', 6, Object.keys(colors)),
             new Setting.StringSelector('Wheat', 14, Object.keys(colors)),
             new Setting.StringSelector('Nether Wart', 12, Object.keys(colors)),
-            new Setting.StringSelector('Pumpkin', 6, Object.keys(colors)),
+            /* new Setting.StringSelector('Pumpkin', 6, Object.keys(colors)),
             new Setting.StringSelector('Melon', 2, Object.keys(colors)),
-            new Setting.StringSelector('Cocoa', 6, Object.keys(colors)),
+            new Setting.StringSelector('Cocoa', 6, Object.keys(colors)), */
         ],
     },
     ]).setCommand('hoeutilities').setSize(450, 200);
