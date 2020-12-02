@@ -1,8 +1,8 @@
-export function hoeLock() {
+export function hoeLock(event) {
     const heldItem = Player.getHeldItem().getName()
-    console.log(global.hoeutils, JSON.stringify(global.hoeutils));
+    // console.log(global.hoeutils, JSON.stringify(global.hoeutils));
     if (global.hoeutils.userSettings.isHoeLockEnabled) {
-        if(
+        if (
             ChatLib.removeFormatting(heldItem).includes("Turing") ||
             ChatLib.removeFormatting(heldItem).includes("Pythagorean") ||
             ChatLib.removeFormatting(heldItem).includes("Gauss") ||
@@ -16,7 +16,7 @@ export function hoeLock() {
     }
 }
 let hoeLockMessageStatus = 0
-function hoeLockMessage () {
+function hoeLockMessage() {
     hoeLockMessageStatus++;
     if (hoeLockMessageStatus == 1) {
         ChatLib.chat('&a[HoeUtilities] &cA feature has stopped you from opening this menu.')
