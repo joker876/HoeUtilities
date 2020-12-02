@@ -43,6 +43,7 @@ export function updateUserSettings() {
         isEventTimerEnabled: settings.getSetting('Features', 'Event Timer'),
         isEventTimerEnabledEverywhere: settings.getSetting('Timer', 'Enable everywhere'),
         isImageEnabled: settings.getSetting('Settings', 'Enable images'),
+        isEventImageEnabled: settings.getSetting('Timer', 'Enable image')
     }
 }
 export function updateScale() {
@@ -51,18 +52,13 @@ export function updateScale() {
 export function updateImageData() {
     //event
     if (!global.hoeutils.userSettings.isEventTimerEnabled) return;
-    if (!TabList.getNames().filter(name => ChatLib.removeFormatting(name).match(/Account Info/i))[0] && !global.hoeutils.userSettings.isEventTimerEnabledEverywhere) return;
+    if (!Scoreboard.getTitle().replace(/§./g, '').equals('SKYBLOCK') && !global.hoeutils.userSettings.isEventTimerEnabledEverywhere) {
+        global.hoeutils.timerDisplay.setShouldRender(false)
+        return
+    }
     global.hoeutils.eventImageData = {
         size: 14 * global.hoeutils.scale,
         yOffset: -4 * global.hoeutils.scale
-    }
-    if (!global.hoeutils.userSettings.isEventTimerEnabled) {
-        global.hoeutils.timerDisplay.setShouldRender(false)
-        return
-    }
-    if (!TabList.getNames().filter(name => ChatLib.removeFormatting(name).match(/Account Info/i))[0] && !global.hoeutils.userSettings.isEventTimerEnabledEverywhere) {
-        global.hoeutils.timerDisplay.setShouldRender(false)
-        return
     }
     const sampleTimestamp = 1606691600
     const timestamp = Math.floor(Date.now() / 1000)
