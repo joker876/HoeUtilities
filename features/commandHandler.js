@@ -5,7 +5,6 @@ import { printFeatureList } from '../helperFunctions/featureListMessage';
 export function commandHandler(...args) {
     if (!args[0]) return ChatLib.command('hoeutilities', true);
     if (args[0].toLowerCase() == 'gui') global.hoeutils.gui.open();
-    else if (args[0].toLowerCase() == 'timergui') global.hoeutils.timerGui.open();
     else if (args[0].toLowerCase() == 'help') printFeatureList();
     else if (args[0].toLowerCase() == 'key') {
         if (!args[1]) return ChatLib.chat('&cNo key specified! &fUse &b/api new &fto get one.');

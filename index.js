@@ -8,6 +8,8 @@ if (!data) {
 }
 global.hoeutils = { data };
 
+global.hoeutils.metadata = JSON.parse(FileLib.read('hoeutilities', './metadata.json'));
+
 global.hoeutils.gui = new Gui();
 global.hoeutils.display = new Display()
     .setShouldRender(false)

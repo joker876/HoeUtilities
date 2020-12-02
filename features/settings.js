@@ -7,7 +7,7 @@ export default function initiateSettings() {
         settings: [
             new Setting.Button("                                          &a&l[HoeUtilities]", "", () => {}),
             new Setting.Button("                                        Made by &c&ljoker876", "", () => {}),
-            new Setting.Button("                                                &8v2.2.0", "", () => {}),
+            new Setting.Button(`                                                &8v${global.hoeutils.metadata.version}`, "", () => {}),
             new Setting.Button("", "", () => {}),
             new Setting.Button("       &dCredits", "", () => {}),
             new Setting.Button("&e&lSquagward", "Help with drag-and-drop GUI", () => {}),
@@ -48,7 +48,7 @@ export default function initiateSettings() {
     {
         name: 'Timer',
         settings: [
-            new Setting.Button("Click here to move the GUI >>>", "&e&lCLICK!", () => { ChatLib.command('hoeutils timergui', true) }),
+            new Setting.Button("Click here to move the GUI >>>", "&e&lCLICK!", () => { ChatLib.command('hoeutils gui', true) }),
             new Setting.Slider('Scale &8in %', 130, 1, 300),
             new Setting.Toggle('Enable image', true),
             new Setting.Slider('Remind how long before the event starts? &8in seconds', 50, 1, 240),
@@ -58,7 +58,7 @@ export default function initiateSettings() {
     {
         name: 'Sessions',
         settings: [
-            new Setting.Button("Click here to move the GUI >>>", "&e&lCLICK!", () => { ChatLib.command('hoeutils sessiongui', true) }),
+            new Setting.Button("Click here to move the GUI >>>", "&e&lCLICK!", () => { ChatLib.command('hoeutils gui', true) }),
             new Setting.Slider('Scale &8in %', 100, 1, 300),
             new Setting.Toggle('Enable images', true),
             new Setting.Toggle('Auto-end and auto-start session', true),
