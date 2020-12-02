@@ -1,4 +1,4 @@
-export function hoeLock(event) {
+export function hoeLock(action, pos, event) {
     const heldItem = Player.getHeldItem().getName()
     // console.log(global.hoeutils, JSON.stringify(global.hoeutils));
     if (global.hoeutils.userSettings.isHoeLockEnabled) {
