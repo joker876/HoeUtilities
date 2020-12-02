@@ -31,7 +31,7 @@ export function updateColorSettings() {
     }
 }
 export function updateUserSettings() {
-    global.global.hoeutils.userSettings = {
+    global.hoeutils.userSettings = {
         isCounterEnabled: settings.getSetting('Features', 'Counter'),
         isCropRateEnabled: settings.getSetting('Features', 'Crop Rate'),
         isMaxEfficiencyEnabled: settings.getSetting('Features', 'Hourly Drops'),
@@ -75,7 +75,7 @@ export function updateImageData() {
         World.playSound('mob.villager.idle', 1000, 1);
         setTimeout(() => {
             global.hoeutils.wasEventReminderDisplayed = false;
-        }, 1100); 
+        }, 1100);
     }
     if (secondsRemaining >= 2400) global.hoeutils.timerDisplay.setLine(0, new DisplayLine(`&aNOW`).setShadow(true))
     else global.hoeutils.timerDisplay.setLine(0, new DisplayLine(`${global.hoeutils.colorSettings.timer}${makeTimer(secondsRemaining)}`).setShadow(true))
