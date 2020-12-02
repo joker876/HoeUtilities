@@ -1,15 +1,15 @@
 import { imageCane, imagePotato, imageCarrot, imageWheat, imageWart, imageEvent } from './constants';
 export function standardImages() {
     if (!global.hoeutils.userSettings.isImageEnabled) return;
-    if (global.hoeutils.imageData.type == 'cane') {
+    if (heldItem.getString('id').match(/HOE_CANE/) && global.hoeutils.imageData.type == 'cane') {
         imageCane.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size)
-    } else if (global.hoeutils.imageData.type == 'potato') {
+    } else if (heldItem.getString('id').match(/HOE_POTATO/) && global.hoeutils.imageData.type == 'potato') {
         imagePotato.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size)
-    } else if (global.hoeutils.imageData.type == 'carrot') {
+    } else if (heldItem.getString('id').match(/HOE_CARROT/) && global.hoeutils.imageData.type == 'carrot') {
         imageCarrot.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size)
-    } else if (global.hoeutils.imageData.type == 'wheat') {
+    } else if (heldItem.getString('id').match(/HOE_WHEAT/) && global.hoeutils.imageData.type == 'wheat') {
         imageWheat.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size - 2, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size)
-    } else if (global.hoeutils.imageData.type == 'wart') {
+    } else if (heldItem.getString('id').match(/HOE_WARTS/) && global.hoeutils.imageData.type == 'wart') {
         imageWart.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size)
     }
 }

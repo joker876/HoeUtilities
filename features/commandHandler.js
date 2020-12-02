@@ -15,7 +15,7 @@ export function commandHandler(...args) {
     }
     else if (args[0].toLowerCase() == 'discord') {
         if(Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-            Desktop.getDesktop().browse(new URI('https://discord.gg/mrkuS7Rs'));
+            Desktop.getDesktop().browse(new URI('https://discord.gg/UmpNYNRmGE'));
         }
     }
     else if (args[0].toLowerCase() == 'testsound') {

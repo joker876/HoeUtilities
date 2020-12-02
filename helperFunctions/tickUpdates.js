@@ -60,7 +60,7 @@ export function updateImageData() {
         size: 14 * global.hoeutils.scale,
         yOffset: -4 * global.hoeutils.scale
     }
-    const sampleTimestamp = 1606691600
+    const sampleTimestamp = 1606691700
     const timestamp = Math.floor(Date.now() / 1000)
     const secondsRemaining = 3600 + (sampleTimestamp - timestamp) % 3600
     const settingsNum = Number(settings.getSetting('Timer', 'Remind how long before the event starts? &8in seconds'))
