@@ -9,8 +9,7 @@ export function commandHandler(...args) {
     else if (args[0].toLowerCase() == 'key') {
         if (!args[1]) return ChatLib.chat('&cNo key specified! &fUse &b/api new &fto get one.');
         if (!args[1].toLowerCase().match(/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/)) return ChatLib.chat('&cInvalid API key!');
-        let data = global.hoeutils.data;
-        data = args[1].toLowerCase();
+        global.hoeutils.data.key = args[1].toLowerCase();
         ChatLib.chat('&a[HoeUtilities] &eyour API key has been set.');
     }
     else if (args[0].toLowerCase() == 'discord') {

@@ -15,19 +15,13 @@ global.hoeutils.display = new Display()
     .setBackground('full')
     .setBackgroundColor(Renderer.color(0, 0, 0, 0));
 
-global.hoeutils.timerGui = new Gui();
-global.hoeutils.timerDisplay = new Display()
-    .setShouldRender(false)
-    .setBackground('full')
-    .setBackgroundColor(Renderer.color(0, 0, 0, 0));
-
 if (!global.hoeutils.collections) {
     global.hoeutils.collections = collections;
 }
 
 import { initiateGuiMover, guiMover } from './features/guiMover';
 import { getElephantLevel } from './helperFunctions/getElephantLevel';
-import initiateSettings from './features/settings';
+import   initiateSettings from './features/settings';
 import { hoeLock } from './features/hoeLock';
 initiateGuiMover();
 register('renderOverlay', guiMover);
@@ -42,7 +36,7 @@ import { apiKeyGrabber, apiKeyChatCriteria } from './features/apiKeyGrabber';
 import { commandHandler } from './features/commandHandler';
 import { updateColorSettings, updateUserSettings, updateImageData, updateScale } from './helperFunctions/tickUpdates';
 import { calculateXpGain, calcSkillProgress, produceAllLines } from './helperFunctions/smallFunctions';
-import getCollections from './helperFunctions/getCollections';
+import   getCollections from './helperFunctions/getCollections';
 import { standardImages, timerImage } from './helperFunctions/renderOverlays';
 
 updateColorSettings();

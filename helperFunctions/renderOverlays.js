@@ -1,5 +1,6 @@
 import { imageCane, imagePotato, imageCarrot, imageWheat, imageWart, imageEvent } from './constants';
 export function standardImages() {
+    const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
     if (!global.hoeutils.userSettings.isImageEnabled) return;
     if (heldItem.getString('id').match(/HOE_CANE/) && global.hoeutils.imageData.type == 'cane') {
         imageCane.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size)
