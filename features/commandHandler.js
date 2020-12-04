@@ -3,7 +3,7 @@ const URI = Java.type("java.net.URI");
 import { printFeatureList } from '../helperFunctions/featureListMessage';
 
 export function commandHandler(...args) {
-    if (!args[0]) return ChatLib.command('hoeutilities', true);
+    if (!args || !args[0]) return ChatLib.command('hoeutilities', true);
     if (args[0].toLowerCase() == 'gui') global.hoeutils.gui.open();
     else if (args[0].toLowerCase() == 'help') printFeatureList();
     else if (args[0].toLowerCase() == 'key') {
@@ -19,6 +19,15 @@ export function commandHandler(...args) {
     }
     else if (args[0].toLowerCase() == 'testsound') {
         World.playSound(args[1] || 'random.orb', args[2] || 1000, args[3] || 1);
+    }
+    else if (args[0].toLowerCase() == 'stopdata') {
+        global.hoeutils.stopData = true;
+        setTimeout(() => {
+            global.hoeutils.stopData = false;
+        }, 30000);
+    }
+    else if (args[0].toLowerCase() == 'debug') {
+        FileLib.write('hoeutilities', './variableDumb.json', JSON.stringify(global.hoeutils[args[1]] ?? {state: 'undefined'}));
     }
     else ChatLib.chat('&eInvalid argument "'+args[0]+'".')
 }

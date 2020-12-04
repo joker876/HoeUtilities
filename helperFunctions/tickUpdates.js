@@ -93,18 +93,10 @@ export function updateImageData() {
         enabled: false,
         size: 0,
         yOffset: 0,
-        type: null,
     }
     if (!global.hoeutils.userSettings.isImageEnabled) return;
     const activeModuleCount = countActiveModules()
     if (!activeModuleCount) return;
-    const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
-    if (heldItem.getString('id').match(/HOE_CANE/)) global.hoeutils.imageData.type = 'cane';
-    else if (heldItem.getString('id').match(/HOE_POTATO/)) global.hoeutils.imageData.type = 'potato';
-    else if (heldItem.getString('id').match(/HOE_CARROT/)) global.hoeutils.imageData.type = 'carrot';
-    else if (heldItem.getString('id').match(/HOE_WHEAT/)) global.hoeutils.imageData.type = 'wheat';
-    else if (heldItem.getString('id').match(/HOE_WARTS/)) global.hoeutils.imageData.type = 'wart';
-    else return;
     switch (activeModuleCount) {
         case 1:
             global.hoeutils.imageData.size = 14 * global.hoeutils.scale;

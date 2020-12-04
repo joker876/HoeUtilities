@@ -14,10 +14,12 @@ global.hoeutils.display = new Display()
     .setShouldRender(false)
     .setBackground('full')
     .setBackgroundColor(Renderer.color(0, 0, 0, 0));
+global.hoeutils.timerDisplay = new Display()
+    .setShouldRender(false)
+    .setBackground('full')
+    .setBackgroundColor(Renderer.color(0, 0, 0, 0));
 
-if (!global.hoeutils.collections) {
-    global.hoeutils.collections = collections;
-}
+global.hoeutils.collections = collections;
 
 import { initiateGuiMover, guiMover } from './features/guiMover';
 import { getElephantLevel } from './helperFunctions/getElephantLevel';
@@ -59,8 +61,8 @@ register('renderOverlay', standardImages);
 register('renderOverlay', timerImage);
 
 register('step', () => {
-    FileLib.write('hoeutilities', './data.json', JSON.stringify(global.hoeutils.data));
-    const counter = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes').getInteger('mined_crops')
+    if (!global.hoeutils.stopData) FileLib.write('hoeutilities', './data.json', JSON.stringify(global.hoeutils.data));
+    const counter = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes').getInteger('mined_crops');
     if (global.hoeutils.collections.cane.counter == 0) {
         global.hoeutils.collections.cane.counter = counter;
     }

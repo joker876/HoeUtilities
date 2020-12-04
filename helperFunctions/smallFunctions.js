@@ -7,7 +7,7 @@ export function calculateCollection(crop, counter) {
     if (global.hoeutils.isCollectionError) {
         global.hoeutils.isCollectionError--;
         if (global.hoeutils.isCollectionError == 0) getCollections();
-        return '&cAPI limit reached &f(&e' + makeTimer(global.hoeutils.isCollectionError/20, 17, 2) + '&f)';
+        return '&cAPI limit reached &f(&e' + makeTimer(global.hoeutils.isCollectionError/20, 17, 2) + 's&f)';
     }
     if (!global.hoeutils.collections[crop].API) return '&cProcessing...';
     return global.hoeutils.collections[crop].API + counter - global.hoeutils.collections[crop].counter;
