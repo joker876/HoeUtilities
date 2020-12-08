@@ -1,5 +1,5 @@
-import { baseCropDrops, collections } from './constants';
-import getCollections from './getCollections';
+import { baseCropDrops } from './constants';
+import { getCollections } from './getCollections';
 import getCropRate from './getCropRate';
 
 export function calculateCollection(crop, counter) {

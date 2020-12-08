@@ -1,4 +1,4 @@
-import getCollections from '../helperFunctions/getCollections';
+import { getCollections } from '../helperFunctions/getCollections';
 export function apiKeyGrabber(apiKey) {
     global.hoeutils.data.key = apiKey;
     setTimeout(() => {
