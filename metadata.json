@@ -3,7 +3,7 @@
 	"author": "joker876",
 	"description": "Provides various utility features to SkyBlock hoes",
 	"helpMessage": "&cType &a&l/hoeutils &r&cto open settings.",
-	"version": "2.4.8",
+	"version": "2.4.15",
 	"requires": [ "SettingsManager", "requestV2", "Promise"],
 	"entry": "index.js"
 }

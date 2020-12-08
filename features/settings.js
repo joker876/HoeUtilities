@@ -1,11 +1,11 @@
 import { Setting, SettingsObject } from 'SettingsManager/SettingsManager';
-import { colors } from '../helperFunctions/constants';
+import { colors, prefix } from '../helperFunctions/constants';
 let settings
 export default function initiateSettings() {
     settings = new SettingsObject('HoeUtilities', [{
         name: "Info",
         settings: [
-            new Setting.Button("                                          &a&l[HoeUtilities]", "", () => {}),
+            new Setting.Button(`                                           ${prefix}`, "", () => {}),
             new Setting.Button("                                        Made by &c&ljoker876", "", () => {}),
             new Setting.Button(`                                                &8v${global.hoeutils.metadata.version}`, "", () => {}),
             new Setting.Button("", "", () => {}),
@@ -33,7 +33,8 @@ export default function initiateSettings() {
             new Setting.Toggle('Event Reminder', true),
             new Setting.Toggle('Event Timer', true),
             new Setting.Button("", "", () => {}),
-            new Setting.Button("Don't know what a ceratin feature is?", "&e&lCLICK!", () => { ChatLib.command('hoeutils help', true) }),
+            new Setting.Button("Don't know what a certain feature is?", "&e&lCLICK!", () => { ChatLib.command('hoeutils help features', true) }),
+            new Setting.Button("A feature isn't working?", "&c&lCLICK!", () => { ChatLib.command('hoeutils help problems', true) }),
             new Setting.Button("Click on the button to the right.", "", () => { ChatLib.command('hoeutils help', true) }),
         ],
     },

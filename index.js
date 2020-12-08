@@ -5,7 +5,7 @@ if (!data) {
     FileLib.write('hoeutilities', './data.json', JSON.stringify(dataFileStructure));
     data = JSON.parse(FileLib.read('hoeutilities', './data.json'));
 }
-global.hoeutils = { data };
+global.hoeutils = { data, debug: { exp: {} } };
 
 global.hoeutils.metadata = JSON.parse(FileLib.read('hoeutilities', './metadata.json'));
 
@@ -38,7 +38,7 @@ import { apiKeyGrabber, apiKeyChatCriteria } from './features/apiKeyGrabber';
 import { commandHandler } from './features/commandHandler';
 import { updateColorSettings, updateUserSettings, updateImageData, updateScale } from './helperFunctions/tickUpdates';
 import { calculateXpGain, calcSkillProgress, produceAllLines } from './helperFunctions/smallFunctions';
-import   getCollections from './helperFunctions/getCollections';
+import { getCollections } from './helperFunctions/getCollections';
 import { standardImages, timerImage } from './helperFunctions/renderOverlays';
 
 updateColorSettings();
@@ -62,20 +62,21 @@ register('renderOverlay', timerImage);
 
 register('step', () => {
     if (!global.hoeutils.stopData) FileLib.write('hoeutilities', './data.json', JSON.stringify(global.hoeutils.data));
+    const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
     const counter = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes').getInteger('mined_crops');
-    if (global.hoeutils.collections.cane.counter == 0) {
+    if (heldItem.getString('id').match(/HOE_CANE/) && global.hoeutils.collections.cane.counter == 0) {
         global.hoeutils.collections.cane.counter = counter;
     }
-    if (global.hoeutils.collections.potato.counter == 0) {
+    if (heldItem.getString('id').match(/HOE_POTATO/) && global.hoeutils.collections.potato.counter == 0) {
         global.hoeutils.collections.potato.counter = counter;
     }
-    if (global.hoeutils.collections.carrot.counter == 0) {
+    if (heldItem.getString('id').match(/HOE_CARROT/) && global.hoeutils.collections.carrot.counter == 0) {
         global.hoeutils.collections.carrot.counter = counter;
     }
-    if (global.hoeutils.collections.wheat.counter == 0) {
+    if (heldItem.getString('id').match(/HOE_WHEAT/) && global.hoeutils.collections.wheat.counter == 0) {
         global.hoeutils.collections.wheat.counter = counter;
     }
-    if (global.hoeutils.collections.potato.counter == 0) {
+    if (heldItem.getString('id').match(/HOE_WARTS/) && global.hoeutils.collections.potato.counter == 0) {
         global.hoeutils.collections.potato.counter = counter;
     }
 }).setDelay(1);
@@ -97,40 +98,59 @@ try {
 }
 export { skillTextField, skillField, renderListener };
 
-register('actionbar', (gained, total, next) => {
-    global.hoeutils.farmingLevelProgress = calcSkillProgress(total, next);
+register('actionbar', (gained, total, current) => {
+    global.hoeutils.debug.wasVanillaActionbarDetected = true;
+    global.hoeutils.farmingLevelProgress = calcSkillProgress(total, current);
 
     skillCurves.forEach((level, i) => {
-        if (next == level - skillCurves[i - 1]) {
+        if (current == level - skillCurves[i - 1]) {
             global.hoeutils.farmingLevel = i;
         }
     })
+    if (current == 0) {
+        global.hoeutils.farmingLevel = getFarmingLevelFromAPI();
+    }
     calculateXpGain(gained);
-}).setCriteria('${*}+${gained} Farming (${total}/${next})${*}')
+    global.hoeutils.debug.exp.level = global.hoeutils.farmingLevel;
+    global.hoeutils.debug.exp.gained = global.hoeutils.gained;
+}).setCriteria('${*}+${gained} Farming (${total}/${current})${*}')
 
 // actionbar trigger for SBA
 if (hasSkyblockAddons) {
+    global.hoeutils.debug.wasSBAActionbarDetected = true;
+    
     register('actionbar', () => {
         if (skillTextField.get(renderListener) === null) return;
+        global.hoeutils.debug.exp.stages = [];
+        global.hoeutils.debug.exp.stages.push('completed'); //0
 
         let name = skillField.get(renderListener)?.toString();
         if (name === undefined) return;
         name = name.charAt(0) + name.slice(1).toLowerCase();
         if (name.toLowerCase() != 'farming') return;
+        global.hoeutils.debug.exp.stages.push('completed'); //1
 
         const skillText = skillTextField.get(renderListener).toString();
         const gained = Number(skillText.split("+")[1].split(" (")[0].replace(/,/g, ''));
-        const xp = skillText.split(" (")[1].split(")")[0];
+        let xp
+        if (skillText.match(/\((.+)\)/)) {
+            xp = skillText.match(/\((.+)\)/)[1]
+        } else xp = '0/0'
+        global.hoeutils.debug.exp.xp = xp;
+        global.hoeutils.debug.exp.skillText = skillText;
         const total = Number(xp.split("/")[0].replace(/,/g, ''));
-        const next = Number(xp.split("/")[1].replace(/,/g, ''));
-        global.hoeutils.farmingLevelProgress = calcSkillProgress(total, next);
+        const current = Number(xp.split("/")[1].replace(/,/g, ''));
+        global.hoeutils.farmingLevelProgress = calcSkillProgress(total, current);
 
         skillCurves.forEach((level, i) => {
-            if (next == level - skillCurves[i - 1]) {
+            if (current == level - skillCurves[i - 1]) {
                 global.hoeutils.farmingLevel = i;
             }
         })
         calculateXpGain(gained);
+        
+        global.hoeutils.debug.exp.level = global.hoeutils.farmingLevel;
+        global.hoeutils.debug.exp.gained = global.hoeutils.gained;
     })
 }
 
