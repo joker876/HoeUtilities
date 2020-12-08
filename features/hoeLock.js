@@ -1,6 +1,6 @@
 export function hoeLock(action, pos, event) {
     const heldItem = Player.getHeldItem().getName()
-    // console.log(global.hoeutils, JSON.stringify(global.hoeutils));
+    if (Player.getHeldItem().getNBT().getCompoundTag("tag").getCompoundTag("ExtraAttributes").getString("id").includes("3")) return;
     if (global.hoeutils.userSettings.isHoeLockEnabled) {
         if (
             ChatLib.removeFormatting(heldItem).includes("Turing") ||
