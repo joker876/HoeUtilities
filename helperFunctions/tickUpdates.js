@@ -50,12 +50,6 @@ export function updateScale() {
     global.hoeutils.scale = settings.getSetting('Settings', 'Scale &8in %') / 100
 }
 export function updateImageData() {
-    //event
-    if (!global.hoeutils.userSettings.isEventTimerEnabled) return;
-    if (!Scoreboard.getTitle().replace(/§./g, '').equals('SKYBLOCK') && !global.hoeutils.userSettings.isEventTimerEnabledEverywhere) {
-        global.hoeutils.timerDisplay.setShouldRender(false)
-        return
-    }
     global.hoeutils.eventImageData = {
         size: 14 * global.hoeutils.scale,
         yOffset: -4 * global.hoeutils.scale
@@ -73,56 +67,15 @@ export function updateImageData() {
             global.hoeutils.wasEventReminderDisplayed = false;
         }, 1100);
     }
+    if (!global.hoeutils.userSettings.isEventTimerEnabled) {
+        global.hoeutils.timerDisplay.setShouldRender(false);
+        return;
+    }
+    if (!Scoreboard.getTitle().replace(/§./g, '').equals('SKYBLOCK') && !global.hoeutils.userSettings.isEventTimerEnabledEverywhere) {
+        global.hoeutils.timerDisplay.setShouldRender(false);
+        return;
+    }
     if (secondsRemaining >= 2400) global.hoeutils.timerDisplay.setLine(0, new DisplayLine(`&aNOW`).setShadow(true))
     else global.hoeutils.timerDisplay.setLine(0, new DisplayLine(`${global.hoeutils.colorSettings.timer}${makeTimer(secondsRemaining)}`).setShadow(true))
     global.hoeutils.timerDisplay.setShouldRender(true)
-
-    //main
-    function countActiveModules() {
-        const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
-        let count = 0
-        if (global.hoeutils.userSettings.isCropRateEnabled) count++;
-        if (global.hoeutils.userSettings.isCounterEnabled && !heldItem.getString('id').match(/PUMPKIN|MELON|COCOA/)) count++;
-        if (global.hoeutils.userSettings.isMaxEfficiencyEnabled) count++;
-        if (global.hoeutils.userSettings.isFarmingLevelEnabled && !heldItem.getString('id').match(/HOE_WARTS/)) count++;
-        if (global.hoeutils.userSettings.isCollectionEnabled && !heldItem.getString('id').match(/HOE_WARTS/)) count++;
-        if (global.hoeutils.userSettings.isHourlyXpGainEnabled) count++;
-        return count;
-    }
-    global.hoeutils.imageData = {
-        enabled: false,
-        size: 0,
-        yOffset: 0,
-    }
-    if (!global.hoeutils.userSettings.isImageEnabled) return;
-    const activeModuleCount = countActiveModules()
-    if (!activeModuleCount) return;
-    switch (activeModuleCount) {
-        case 1:
-            global.hoeutils.imageData.size = 14 * global.hoeutils.scale;
-            break;
-        default:
-            global.hoeutils.imageData.size = 20 * global.hoeutils.scale;
-            break;
-    }
-    switch (activeModuleCount) {
-        case 1:
-            global.hoeutils.imageData.yOffset = -3 * global.hoeutils.scale;
-            break;
-        case 2:
-            global.hoeutils.imageData.yOffset = -2 * global.hoeutils.scale;
-            break;
-        case 3:
-            global.hoeutils.imageData.yOffset = 3 * global.hoeutils.scale;
-            break;
-        case 4:
-            global.hoeutils.imageData.yOffset = 9 * global.hoeutils.scale;
-            break;
-        case 5:
-            global.hoeutils.imageData.yOffset = 15 * global.hoeutils.scale;
-            break;
-        case 6:
-            global.hoeutils.imageData.yOffset = 21 * global.hoeutils.scale;
-            break;
-    }
 }
