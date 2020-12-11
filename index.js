@@ -1,4 +1,4 @@
-import { dataFileStructure, skillCurves, collections } from './helperFunctions/constants'
+import { dataFileStructure, collections } from './helperFunctions/constants'
 
 let data = JSON.parse(FileLib.read('hoeutilities', './data.json'));
 if (!data) {
@@ -35,11 +35,13 @@ initiateSettings();
 register('playerInteract', hoeLock);
 
 import { apiKeyGrabber, apiKeyChatCriteria } from './features/apiKeyGrabber';
+import   anitaBonusGrabber from './helperFunctions/anitaBonusGrabber';
 import { commandHandler } from './features/commandHandler';
 import { updateColorSettings, updateUserSettings, updateImageData, updateScale } from './helperFunctions/tickUpdates';
-import { calculateXpGain, calcSkillProgress, produceAllLines } from './helperFunctions/smallFunctions';
-import { getCollections } from './helperFunctions/getCollections';
+import { produceAllLines } from './helperFunctions/smallFunctions';
+import { getCollections } from './helperFunctions/getAPI';
 import { standardImages, timerImage } from './helperFunctions/renderOverlays';
+import   getFarmingInfo from './helperFunctions/getFarmingInfo';
 
 updateColorSettings();
 updateUserSettings();
@@ -48,6 +50,9 @@ updateImageData();
 
 //api key grabber
 register('chat', apiKeyGrabber).setCriteria(apiKeyChatCriteria);
+
+//anita bonus grabber
+register('chat', anitaBonusGrabber).setCriteria('${message}');
 
 //command handler
 register('command', commandHandler).setName('hoeutils');
@@ -100,19 +105,7 @@ export { skillTextField, skillField, renderListener };
 
 register('actionbar', (gained, total, current) => {
     global.hoeutils.debug.wasVanillaActionbarDetected = true;
-    global.hoeutils.farmingLevelProgress = calcSkillProgress(total, current);
-
-    skillCurves.forEach((level, i) => {
-        if (current == level - skillCurves[i - 1]) {
-            global.hoeutils.farmingLevel = i;
-        }
-    })
-    if (current == 0) {
-        global.hoeutils.farmingLevel = getFarmingLevelFromAPI();
-    }
-    calculateXpGain(gained);
-    global.hoeutils.debug.exp.level = global.hoeutils.farmingLevel;
-    global.hoeutils.debug.exp.gained = global.hoeutils.gained;
+    getFarmingInfo(current, total, gained);
 }).setCriteria('${*}+${gained} Farming (${total}/${current})${*}')
 
 // actionbar trigger for SBA
@@ -135,22 +128,13 @@ if (hasSkyblockAddons) {
         let xp
         if (skillText.match(/\((.+)\)/)) {
             xp = skillText.match(/\((.+)\)/)[1]
-        } else xp = '0/0'
+        } else xp = '-1/-1';
         global.hoeutils.debug.exp.xp = xp;
         global.hoeutils.debug.exp.skillText = skillText;
         const total = Number(xp.split("/")[0].replace(/,/g, ''));
         const current = Number(xp.split("/")[1].replace(/,/g, ''));
-        global.hoeutils.farmingLevelProgress = calcSkillProgress(total, current);
 
-        skillCurves.forEach((level, i) => {
-            if (current == level - skillCurves[i - 1]) {
-                global.hoeutils.farmingLevel = i;
-            }
-        })
-        calculateXpGain(gained);
-        
-        global.hoeutils.debug.exp.level = global.hoeutils.farmingLevel;
-        global.hoeutils.debug.exp.gained = global.hoeutils.gained;
+        getFarmingInfo(current, total, gained);
     })
 }
 
@@ -172,16 +156,16 @@ register("tick", () => {
         displayLines = produceAllLines('cane')
     } else if (heldItem.getString('id').match(/HOE_POTATO/)) {
         global.hoeutils.display.setShouldRender(true)
-        displayLines = produceAllLines('potato')
+        displayLines = produceAllLines('potato', { replenish: 1 })
     } else if (heldItem.getString('id').match(/HOE_CARROT/)) {
         global.hoeutils.display.setShouldRender(true)
-        displayLines = produceAllLines('carrot')
+        displayLines = produceAllLines('carrot', { replenish: 1 })
     } else if (heldItem.getString('id').match(/HOE_WHEAT/)) {
         global.hoeutils.display.setShouldRender(true)
         displayLines = produceAllLines('wheat')
     } else if (heldItem.getString('id').match(/HOE_WARTS/)) {
         global.hoeutils.display.setShouldRender(true)
-        displayLines = produceAllLines('wart', { farmingLevel: true, hourlyGain: true });
+        displayLines = produceAllLines('wart', { farmingLevel: true, hourlyGain: true, replenish: 1 });
         ////////////////////////////////////////////////////////////
         /* } else if (heldItem.getString('id').match(/COCO_CHOPPER/)) {
             global.hoeutils.display.setShouldRender(true)

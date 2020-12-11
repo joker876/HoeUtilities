@@ -14,9 +14,7 @@ export function standardImages() {
         if (global.hoeutils.userSettings.isCropRateEnabled) count++;
         if (global.hoeutils.userSettings.isCounterEnabled && !heldItem.getString('id').match(/PUMPKIN|MELON|COCOA/)) count++;
         if (global.hoeutils.userSettings.isMaxEfficiencyEnabled) count++;
-        if (global.hoeutils.userSettings.isFarmingLevelEnabled && !heldItem.getString('id').match(/HOE_WARTS/)) count++;
         if (global.hoeutils.userSettings.isCollectionEnabled && !heldItem.getString('id').match(/HOE_WARTS/)) count++;
-        if (global.hoeutils.userSettings.isHourlyXpGainEnabled) count++;
         return count;
     }
     global.hoeutils.imageData = {
@@ -78,5 +76,32 @@ export function timerImage() {
     if (!Scoreboard.getTitle().replace(/§./g, '').equals('SKYBLOCK') && !global.hoeutils.userSettings.isEventTimerEnabledEverywhere) return;
     if (global.hoeutils.userSettings.isEventImageEnabled) {
         imageEvent.draw(global.hoeutils.data.timer.x - global.hoeutils.eventImageData.size - 4, global.hoeutils.data.timer.y + global.hoeutils.eventImageData.yOffset, global.hoeutils.eventImageData.size, global.hoeutils.eventImageData.size)
+    }
+}
+const imageFarming = new Image('hoeutils_farming', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9d/Golden_Hoe_JE3_BE3.png')
+export function farmingImage() {
+    if (!global.hoeutils.settings.getSetting('Features', 'Farming Info')) return;
+    if (!global.hoeutils.userSettings.farmingInfo.isImageEnabled) return;
+    function countActiveModules() {
+        const s = global.hoeutils.userSettings.farmingInfo;
+        return (s.isLevelEnabled || s.isExpPerHourEnabled || s.isTotalExpEnabled || s.isProgressToNextEnabled || s.isExpLeftEnabled || s.isETAToNextEnabled)
+        + s.isLevelEnabled + s.isExpPerHourEnabled + s.isTotalExpEnabled + s.isProgressToNextEnabled + s.isExpLeftEnabled + s.isETAToNextEnabled +
+        (s.isExpLeftToMaxEnabled || s.isProgressToMaxEnabled || s.isETAToMaxEnabled)
+        + s.isProgressToMaxEnabled + s.isExpLeftToMaxEnabled + s.isETAToMaxEnabled
+    }
+    const activeModuleCount = countActiveModules();
+    if (!activeModuleCount) return;
+    let size, yOffset;
+    switch (activeModuleCount) {
+        case 2:
+            size = 14 * global.hoeutils.scale;
+            break;
+        default:
+            size = 20 * global.hoeutils.scale;
+    }
+    switch (activeModuleCount) {
+        case value:
+            
+            break;
     }
 }

@@ -35,15 +35,25 @@ export function updateUserSettings() {
         isCounterEnabled: settings.getSetting('Features', 'Counter'),
         isCropRateEnabled: settings.getSetting('Features', 'Crop Rate'),
         isMaxEfficiencyEnabled: settings.getSetting('Features', 'Hourly Drops'),
-        isHourlyXpGainEnabled: settings.getSetting('Features', 'Hourly max_exp'),
-        isFarmingLevelEnabled: settings.getSetting('Features', 'Farming Level'),
         isCollectionEnabled: settings.getSetting('Features', 'Collection'),
         isHoeLockEnabled: settings.getSetting('Features', 'Hoe Lock'),
         isEventReminderEnabled: settings.getSetting('Features', 'Event Reminder'),
         isEventTimerEnabled: settings.getSetting('Features', 'Event Timer'),
         isEventTimerEnabledEverywhere: settings.getSetting('Timer', 'Enable everywhere'),
         isImageEnabled: settings.getSetting('Settings', 'Enable images'),
-        isEventImageEnabled: settings.getSetting('Timer', 'Enable image')
+        isEventImageEnabled: settings.getSetting('Timer', 'Enable image'),
+        farmingInfo: {
+            isLevelEnabled: settings.getSetting('Farming Info', 'Farming Level'),
+            isExpPerHourEnabled: settings.getSetting('Farming Info', 'Exp per hour'),
+            isTotalExpEnabled: settings.getSetting('Farming Info', 'Total Exp'),
+            isProgressToNextEnabled: settings.getSetting('Farming Info', 'Progress to next level'),
+            isExpLeftEnabled: settings.getSetting('Farming Info', 'Exp left to next level'),
+            isETAToNextEnabled: settings.getSetting('Farming Info', 'Estimated time to next level'),
+            isProgressToMaxEnabled: settings.getSetting('Farming Info', 'Progress to level 50/60'),
+            isExpLeftToMaxEnabled: settings.getSetting('Farming Info', 'Exp left to level 50/60'),
+            isETAToMaxEnabled: settings.getSetting('Farming Info', 'Estimated time to level 50/60'),
+            isImageEnabled: settings.getSetting('Farming Info', 'Enable Image'),
+        }
     }
 }
 export function updateScale() {

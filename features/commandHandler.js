@@ -79,6 +79,9 @@ export function commandHandler(...args) {
             }
             break;
         }
+        case 'anita': {
+            
+        }
         default: {
             ChatLib.chat('&eInvalid argument "'+cmd+'".');
         }
