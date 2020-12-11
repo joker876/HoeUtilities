@@ -1,4 +1,4 @@
-const rarities = {
+export const rarities = {
     COMMON: 5,
     UNCOMMON: 7,
     RARE: 9,
@@ -7,7 +7,7 @@ const rarities = {
     MYTHIC: 20,
 }
 
-const romanNums = {
+export const romanNums = {
     'I': 1,
     'II': 2,
     'III': 3,
@@ -18,9 +18,59 @@ const romanNums = {
     'VIII': 8,
     'IX': 9,
     'X': 10,
+    'XI': 11,
+    'XII': 12,
+    'XIII': 13,
+    'XIV': 14,
+    'XV': 15,
+    'XVI': 16,
+    'XVII': 17,
+    'XVIII': 18,
+    'XIX': 19,
+    'XX': 20,
+    'XXI': 21,
+    'XXII': 22,
+    'XXIII': 23,
+    'XXIV': 24,
+    'XXV': 25,
+    'XXVI': 26,
+    'XXVII': 27,
+    'XXVIII': 28,
+    'XXIX': 29,
+    'XXX': 30,
+    'XXXI': 31,
+    'XXXII': 32,
+    'XXXIII': 33,
+    'XXXIV': 34,
+    'XXXV': 35,
+    'XXXVI': 36,
+    'XXXVII': 37,
+    'XXXVIII': 38,
+    'XXXIX': 39,
+    'XL': 40,
+    'XLI': 41,
+    'XLII': 42,
+    'XLIII': 43,
+    'XLIV': 44,
+    'XLV': 45,
+    'XLVI': 46,
+    'XLVII': 47,
+    'XLVIII': 48,
+    'XLIX': 49,
+    'L': 50,
+    'LI': 51,
+    'LII': 52,
+    'LIII': 53,
+    'LIV': 54,
+    'LV': 55,
+    'LVI': 56,
+    'LVII': 57,
+    'LVIII': 58,
+    'LIX': 59,
+    'LX': 60,
 }
 
-const colors = {
+export const colors = {
     '&0Black': '&0',
     '&1Dark Blue': '&1',
     '&2Dark Green': '&2',
@@ -39,7 +89,7 @@ const colors = {
     '&fWhite': '&f',
 }
 
-const baseCropDrops = {
+export const baseCropDrops = {
     cane: 1*2,
     potato: 3,
     carrot: 3,
@@ -50,21 +100,22 @@ const baseCropDrops = {
     cocoa: 2.5,
 }
 
-const dataFileStructure = {
+export const dataFileStructure = {
     key: null,
     hud: { x: 20, y: 5 }, 
     timer: { x: Renderer.screen.getWidth() - 40, y: 5 },
     session: { x: Renderer.screen.getWidth() - 100, y: 5 }
 }
 
-const imageCane = new Image("hoeutils_sugar_cane","https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/58/Sugar_Cane_%28item%29_JE1_BE1.png")
-const imagePotato = new Image('hoeutils_potato', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/ff/Potato_JE1_BE1.png')
-const imageCarrot = new Image('hoeutils_carrot', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4c/Carrot_JE2_BE1.png')
-const imageWheat = new Image('hoeutils_wheat', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ef/Wheat_JE1_BE1.png')
-const imageWart = new Image('hoeutils_wart', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c0/Nether_Wart_%28item%29_JE1.png')
-const imageEvent = new Image('hoeutils_event', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ef/Wheat_JE1_BE1.png')
+export const imageCane = new Image("hoeutils_sugar_cane","https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/58/Sugar_Cane_%28item%29_JE1_BE1.png")
+export const imagePotato = new Image('hoeutils_potato', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/ff/Potato_JE1_BE1.png')
+export const imageCarrot = new Image('hoeutils_carrot', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4c/Carrot_JE2_BE1.png')
+export const imageWheat = new Image('hoeutils_wheat', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ef/Wheat_JE1_BE1.png')
+export const imageWart = new Image('hoeutils_wart', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c0/Nether_Wart_%28item%29_JE1.png')
+export const imageEvent = new Image('hoeutils_event', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ef/Wheat_JE1_BE1.png')
+export const imageFarming = new Image('hoeutils_farming', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9d/Golden_Hoe_JE3_BE3.png')
 
-const collections = {
+export const collections = {
     last_updated: 0,
     cane: {API: 0, counter: 0},
     potato: {API: 0, counter: 0},
@@ -76,12 +127,12 @@ const collections = {
     cocoa: 0,
 }
 
-const skillCurves = [50, 175, 375, 675, 1175, 1925, 2925, 4425, 6425, 9925, 14925, 22425, 32425, 47425, 67425, 97425, 147425, 222425, 322425, 522425, 822425, 1222425, 1722425, 2322425, 3022425, 3822425, 4722425, 5722425, 6822425, 8022425, 9322425, 10722425, 12222425, 13822425, 15522425, 17322425, 19222425, 21222425, 23322425, 25522425, 27822425, 30222425, 32722425, 35322425, 38072425, 40972425, 44072425, 47472425, 51172425, 55172425, 59472425, 64072425, 68972452, 74172425, 79672425, 85472425, 91572425, 97972425, 104672425, 111672425];
+export const skillCurves = [50, 175, 375, 675, 1175, 1925, 2925, 4425, 6425, 9925, 14925, 22425, 32425, 47425, 67425, 97425, 147425, 222425, 322425, 522425, 822425, 1222425, 1722425, 2322425, 3022425, 3822425, 4722425, 5722425, 6822425, 8022425, 9322425, 10722425, 12222425, 13822425, 15522425, 17322425, 19222425, 21222425, 23322425, 25522425, 27822425, 30222425, 32722425, 35322425, 38072425, 40972425, 44072425, 47472425, 51172425, 55172425, 59472425, 64072425, 68972452, 74172425, 79672425, 85472425, 91572425, 97972425, 104672425, 111672425];
 
-const prefix = '&l&2[&aHoeUtilities&2]&r';
-const title = `&c==========< ${prefix} &c>==========\n`;
+export const prefix = '&l&2[&aHoeUtilities&2]&r';
+export const title = `&c==========< ${prefix} &c>==========\n`;
 
-const helpMessages = {
+export const helpMessages = {
     elephant: new Message(
         new TextComponent(title),
         new TextComponent('&eIf your Elephant Pet is not being detected, possible solutions may be:\n'),
@@ -178,5 +229,3 @@ const helpMessages = {
             .setClick("run_command", "/hoeutils help problems"),
     )
 }
-
-export {rarities, romanNums, colors, baseCropDrops, dataFileStructure, imageCane, imagePotato, imageCarrot, imageWheat, imageWart, imageEvent, collections, skillCurves, helpMessages, prefix, title}
