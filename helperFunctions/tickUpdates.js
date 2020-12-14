@@ -9,11 +9,13 @@ global.hoeutils.colorSettings = {
     potato: colors[settings.getSetting('Colors', 'Potato')],
     cane: colors[settings.getSetting('Colors', 'Sugar Cane')],
     carrot: colors[settings.getSetting('Colors', 'Carrot')],
-    wart: colors[settings.getSetting('Colors', 'Nether Wart')],
     wheat: colors[settings.getSetting('Colors', 'Wheat')],
-    /* pumpkin: colors[settings.getSetting('Colors', 'Pumpkin')],
-    melon: colors[settings.getSetting('Colors', 'Melon')],
-    cocoa: colors[settings.getSetting('Colors', 'Cocoa')], */
+    wart: colors[settings.getSetting('Colors #2', 'Nether Wart')],
+    pumpkin: colors[settings.getSetting('Colors #2', 'Pumpkin')],
+    melon: colors[settings.getSetting('Colors #2', 'Melon')],
+    cocoa: colors[settings.getSetting('Colors #2', 'Cocoa')],
+    mushroom: colors[settings.getSetting('Colors #2', 'Mushrooms')],
+    cactus: colors[settings.getSetting('Colors #2', 'Cactus')],
 }
 export function updateColorSettings() {
     global.hoeutils.colorSettings = {
@@ -23,11 +25,13 @@ export function updateColorSettings() {
         potato: colors[settings.getSetting('Colors', 'Potato')],
         cane: colors[settings.getSetting('Colors', 'Sugar Cane')],
         carrot: colors[settings.getSetting('Colors', 'Carrot')],
-        wart: colors[settings.getSetting('Colors', 'Nether Wart')],
         wheat: colors[settings.getSetting('Colors', 'Wheat')],
-        /* pumpkin: colors[settings.getSetting('Colors', 'Pumpkin')],
-        melon: colors[settings.getSetting('Colors', 'Melon')],
-        cocoa: colors[settings.getSetting('Colors', 'Cocoa')], */
+        wart: colors[settings.getSetting('Colors #2', 'Nether Wart')],
+        pumpkin: colors[settings.getSetting('Colors #2', 'Pumpkin')],
+        melon: colors[settings.getSetting('Colors #2', 'Melon')],
+        cocoa: colors[settings.getSetting('Colors #2', 'Cocoa')],
+        mushroom: colors[settings.getSetting('Colors #2', 'Mushrooms')],
+        cactus: colors[settings.getSetting('Colors #2', 'Cactus')],
     }
 }
 export function updateUserSettings() {
@@ -49,20 +53,22 @@ export function updateUserSettings() {
             isProgressToNextEnabled: settings.getSetting('Farming Info', 'Progress to next level'),
             isExpLeftEnabled: settings.getSetting('Farming Info', 'Exp left to next level'),
             isETAToNextEnabled: settings.getSetting('Farming Info', 'Estimated time to next level'),
-            isProgressToMaxEnabled: settings.getSetting('Farming Info', 'Progress to level 50/60'),
-            isExpLeftToMaxEnabled: settings.getSetting('Farming Info', 'Exp left to level 50/60'),
-            isETAToMaxEnabled: settings.getSetting('Farming Info', 'Estimated time to level 50/60'),
-            isImageEnabled: settings.getSetting('Farming Info', 'Enable Image'),
+            isLevelCapEnabled: settings.getSetting('Farming Info', 'Level Cap'),
+            isProgressToMaxEnabled: settings.getSetting('Farming Info', 'Progress to level cap'),
+            isExpLeftToMaxEnabled: settings.getSetting('Farming Info', 'Exp left to level cap'),
+            isETAToMaxEnabled: settings.getSetting('Farming Info', 'Estimated time to level cap'),
         }
     }
 }
 export function updateScale() {
     global.hoeutils.scale = settings.getSetting('Settings', 'Scale &8in %') / 100
+    global.hoeutils.timerScale = settings.getSetting('Timer', 'Scale &8in %') / 100
+    global.hoeutils.farmingScale = settings.getSetting('Farming Info', 'Scale &8in %') / 100
 }
 export function updateImageData() {
     global.hoeutils.eventImageData = {
-        size: 14 * global.hoeutils.scale,
-        yOffset: -4 * global.hoeutils.scale
+        size: 14 * global.hoeutils.timerScale,
+        yOffset: -4 * global.hoeutils.timerScale
     }
     const sampleTimestamp = 1606691700
     const timestamp = Math.floor(Date.now() / 1000)
@@ -85,7 +91,7 @@ export function updateImageData() {
         global.hoeutils.timerDisplay.setShouldRender(false);
         return;
     }
-    if (secondsRemaining >= 2400) global.hoeutils.timerDisplay.setLine(0, new DisplayLine(`&aNOW`).setShadow(true))
-    else global.hoeutils.timerDisplay.setLine(0, new DisplayLine(`${global.hoeutils.colorSettings.timer}${makeTimer(secondsRemaining)}`).setShadow(true))
+    if (secondsRemaining >= 2400) global.hoeutils.timerDisplay.setLine(0, new DisplayLine(`&aNOW (${makeTimer(secondsRemaining-2400)})`).setShadow(true))
+    else global.hoeutils.timerDisplay.setLine(0, new DisplayLine(`${global.hoeutils.colorSettings.timer}${makeTimer(secondsRemaining)}`).setShadow(true).setScale(global.hoeutils.timerScale))
     global.hoeutils.timerDisplay.setShouldRender(true)
 }
