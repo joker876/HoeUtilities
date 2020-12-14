@@ -144,6 +144,19 @@ if (hasSkyblockAddons) {
         getFarmingInfo(current, total, gained);
     })
 }
+/* global.hoeutils.currentFarmingExpLeft = Infinity;
+global.hoeutils.isFarmingTimer = 600;
+register('tick', () => {
+    if (global.hoeutils.currentFarmingExpLeft > global.hoeutils.expToNext) {
+        global.hoeutils.currentFarmingExpLeft = global.hoeutils.expToNext
+        global.hoeutils.farmingExpDebug = { current: global.hoeutils.currentFarmingExpLeft, toNext: global.hoeutils.expToNext }
+        global.hoeutils.isFarming = true;
+    }
+    else global.hoeutils.isFarming = false;
+    if (!global.hoeutils.isFarming) {
+        global.hoeutils.isFarmingTimer++;
+    }
+}) */
 
 register("tick", () => {
     const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
