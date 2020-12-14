@@ -1,36 +1,39 @@
 import { rarities } from './constants';
 export default function getCropRate() {
-    const itemNBT = Player.getHeldItem().getItemNBT();
     let cropRate = 100;
     let multiDropChance = 100
     global.hoeutils.debug.croprate = {};
     global.hoeutils.debug.croprate.stages = [];
     global.hoeutils.debug.croprate.stages.push(cropRate); //0
     
+    const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
+    
     //cropRate
-    if (itemNBT.getCompoundTag('tag').getCompoundTag('ExtraAttributes').getString('id').match(/HOE_(?:CANE|POTATO|CARROT|WHEAT|WARTS)_([123])/)) {
+    if (heldItem.getString('id').match(/HOE_(?:CANE|POTATO|CARROT|WHEAT|WARTS)_([123])/)) {
         const hoeBonusValues = [ 10, 25, 50 ];
-        let tier = itemNBT.getCompoundTag('tag').getCompoundTag('ExtraAttributes').getString('id').match(/HOE_(?:CANE|POTATO|CARROT|WHEAT|WARTS)_([123])/)[1];
+        let tier = heldItem.getString('id').match(/HOE_(?:CANE|POTATO|CARROT|WHEAT|WARTS)_([123])/)[1];
         cropRate += hoeBonusValues[tier-1];
         global.hoeutils.debug.croprate.tier = tier;
+    }
+    else if (heldItem.getString('id').match(/COCO_CHOPPER/)) {
+        cropRate += 20;
+    }
+    else if (heldItem.getString('id').match(/FUNGI_CUTTER/)) {
+        cropRate += 30;
     }
     global.hoeutils.debug.croprate.stages.push(cropRate); //1
     
     //multiDropChance
-    const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
-    
     const lore = JSON.parse(Player.getHeldItem().getRawNBT().match(/Lore:(\[.+\])/)[1].replace(/\d+:/g, ''));
     let rarity;
-    if (heldItem.getString('id').match(/HOE/)) {
-        for (let i = 1; i <= 6; i++) {
-            if (lore[lore.length - i].match(/(COMMON|UNCOMMON|RARE|EPIC|LEGENDARY|MYTHIC)/)) {
-                rarity = lore[lore.length - i].match(/(COMMON|UNCOMMON|RARE|EPIC|LEGENDARY|MYTHIC)/)[1];
-            }
+    for (let i = 1; i <= 6; i++) {
+        if (lore[lore.length - i].match(/(COMMON|UNCOMMON|RARE|EPIC|LEGENDARY|MYTHIC)/)) {
+            rarity = lore[lore.length - i].match(/(COMMON|UNCOMMON|RARE|EPIC|LEGENDARY|MYTHIC)/)[1];
         }
     }
     global.hoeutils.debug.croprate.rarity = rarity;
-    if (itemNBT.getCompoundTag('tag').getCompoundTag('ExtraAttributes').getString('modifier') === 'blessed') multiDropChance += rarities[rarity];
-    global.hoeutils.debug.croprate.stages.push(cropRate); //2
+    if (heldItem.getString('modifier') === 'blessed') multiDropChance += rarities[rarity];
+    global.hoeutils.debug.croprate.stages.push(multiDropChance); //2
     
     //cropRate
     cropRate += global.hoeutils.farmingLevel * 4;
@@ -71,13 +74,13 @@ export default function getCropRate() {
             global.hoeutils.debug.croprate.enchants.harvesting = heldItem.getCompoundTag('enchantments').getInteger('turbo_warts');
         }
     } else if (heldItem.getString('id').match(/PUMPKIN_DICER/)) {
-        cropRate += 64*0.114 + 160*0.043 + 10*160*0.007 + 64*160*0.001;
+        //64*0.114 + 160*0.043 + 10*160*0.007 + 64*160*0.001;
         if (heldItem.getCompoundTag('enchantments').getInteger('turbo_pumpkin')) {
             cropRate += heldItem.getCompoundTag('enchantments').getInteger('turbo_pumpkin') * 5;
             global.hoeutils.debug.croprate.enchants.harvesting = heldItem.getCompoundTag('enchantments').getInteger('turbo_pumpkin');
         }
     } else if (heldItem.getString('id').match(/MELON_DICER/)) {
-        cropRate += 160*0.114 + 5*160*0.043 + 50*160*0.007 + 2*160*160*0.001;
+        //160*0.114 + 5*160*0.043 + 50*160*0.007 + 2*160*160*0.001;
         if (heldItem.getCompoundTag('enchantments').getInteger('turbo_melon')) {
             cropRate += heldItem.getCompoundTag('enchantments').getInteger('turbo_melon') * 5;
             global.hoeutils.debug.croprate.enchants.harvesting = heldItem.getCompoundTag('enchantments').getInteger('turbo_melon');
@@ -88,9 +91,10 @@ export default function getCropRate() {
             global.hoeutils.debug.croprate.enchants.harvesting = heldItem.getCompoundTag('enchantments').getInteger('turbo_coco');
         }
     }
-    //cropRate
     global.hoeutils.debug.croprate.stages.push(cropRate); //5
-    if (heldItem.getString('id').match(/HOE/)) {
+
+    //cropRate
+    if (heldItem.getString('id').match(/HOE_(CANE|POTATO|CARROT|WHEAT|WART)/)) {
         lore.forEach(str => {
             str = ChatLib.removeFormatting(str);
             if (str.match(/Counter bonus: \+(\d{1,3})%/i)) {
@@ -103,12 +107,12 @@ export default function getCropRate() {
     
     //multiDropChance
     multiDropChance += global.hoeutils.elephantPetLevel * 0.5;
-    global.hoeutils.debug.croprate.stages.push(cropRate); //7
+    global.hoeutils.debug.croprate.stages.push(multiDropChance); //7
     global.hoeutils.debug.croprate.elephant = global.hoeutils.elephantPetLevel;
     
     //multiDropChance
-    multiDropChance += global.hoeutils.anitaBonus
-    global.hoeutils.debug.croprate.stages.push(cropRate); //8
+    multiDropChance += global.hoeutils.anitaBonus * 2
+    global.hoeutils.debug.croprate.stages.push(multiDropChance); //8
     global.hoeutils.debug.croprate.anita = global.hoeutils.anitaBonus;
     
     return cropRate * multiDropChance / 100;
