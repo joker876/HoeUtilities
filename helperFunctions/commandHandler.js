@@ -1,7 +1,7 @@
 const Desktop = Java.type("java.awt.Desktop");
 const URI = Java.type("java.net.URI");
-import { printFeatureList } from '../helperFunctions/featureListMessage';
-import { helpMessages } from '../helperFunctions/constants';
+import { printFeatureList } from './featureListMessage';
+import { helpMessages } from './constants';
 
 /* export function commandHandler(...args) {
     if (!args || !args[0]) return ChatLib.command('hoeutilities', true);

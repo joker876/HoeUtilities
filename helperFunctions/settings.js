@@ -40,16 +40,18 @@ export default function initiateSettings() {
     {
         name: 'Farming Info',
         settings: [
+            new Setting.Button("Click here to move the GUI >>>", "&e&lCLICK!", () => { ChatLib.command('hoeutils gui', true) }),
             new Setting.Toggle('Farming Level', true),
             new Setting.Toggle('Exp per hour', true),
             new Setting.Toggle('Total Exp', true),
             new Setting.Toggle('Progress to next level', true),
             new Setting.Toggle('Exp left to next level', true),
             new Setting.Toggle('Estimated time to next level', true),
-            new Setting.Toggle('Progress to level 50/60', true),
-            new Setting.Toggle('Exp left to level 50/60', true),
-            new Setting.Toggle('Estimated time to level 50/60', true),
-            new Setting.Toggle('Enable Image', true),
+            new Setting.Toggle('Level Cap', true),
+            new Setting.Toggle('Progress to level cap', true),
+            new Setting.Toggle('Exp left to level cap', true),
+            new Setting.Toggle('Estimated time to level cap', true),
+            new Setting.Slider('Scale &8in %', 100, 1, 300),
         ],
     },
     {
@@ -64,7 +66,7 @@ export default function initiateSettings() {
         name: 'Timer',
         settings: [
             new Setting.Button("Click here to move the GUI >>>", "&e&lCLICK!", () => { ChatLib.command('hoeutils gui', true) }),
-            new Setting.Slider('Scale &8in %', 130, 1, 300),
+            new Setting.Slider('Scale &8in %', 100, 1, 300),
             new Setting.Toggle('Enable image', true),
             new Setting.Slider('Remind how long before the event starts? &8in seconds', 50, 1, 240),
             new Setting.Toggle('Enable everywhere', false),
@@ -91,12 +93,19 @@ export default function initiateSettings() {
             new Setting.StringSelector('Potato', 14, Object.keys(colors)),
             new Setting.StringSelector('Carrot', 6, Object.keys(colors)),
             new Setting.StringSelector('Wheat', 14, Object.keys(colors)),
-            new Setting.StringSelector('Nether Wart', 12, Object.keys(colors)),
-            /* new Setting.StringSelector('Pumpkin', 6, Object.keys(colors)),
-            new Setting.StringSelector('Melon', 2, Object.keys(colors)),
-            new Setting.StringSelector('Cocoa', 6, Object.keys(colors)), */
         ],
     },
+    {
+        name: 'Colors #2',
+        settings: [
+            new Setting.StringSelector('Nether Wart', 12, Object.keys(colors)),
+            new Setting.StringSelector('Pumpkin', 6, Object.keys(colors)),
+            new Setting.StringSelector('Melon', 2, Object.keys(colors)),
+            new Setting.StringSelector('Cocoa', 6, Object.keys(colors)),
+            new Setting.StringSelector('Mushrooms', 12, Object.keys(colors)),
+            new Setting.StringSelector('Cactus', 2, Object.keys(colors)),
+        ]
+    }
     ]).setCommand('hoeutilities').setSize(450, 200);
     Setting.register(settings);
 

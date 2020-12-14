@@ -1,9 +1,9 @@
-import { getCollections } from '../helperFunctions/getAPI';
+import getAPIInfo from './getAPI';
 export function apiKeyGrabber(apiKey) {
     global.hoeutils.data.key = apiKey;
     setTimeout(() => {
         ChatLib.chat(`&a[HoeUtilities] &eAPI Key set!\n`);
-        getCollections();
+        getAPIInfo('collection');
     }, 100);
     return;
 }
