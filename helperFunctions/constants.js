@@ -107,12 +107,17 @@ export const dataFileStructure = {
     farming: { x: Renderer.screen.getWidth() - 175, y: 5 }
 }
 
-export const imageCane = new Image("hoeutils_sugar_cane","https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/58/Sugar_Cane_%28item%29_JE1_BE1.png")
-export const imagePotato = new Image('hoeutils_potato', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/ff/Potato_JE1_BE1.png')
-export const imageCarrot = new Image('hoeutils_carrot', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4c/Carrot_JE2_BE1.png')
-export const imageWheat = new Image('hoeutils_wheat', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ef/Wheat_JE1_BE1.png')
-export const imageWart = new Image('hoeutils_wart', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c0/Nether_Wart_%28item%29_JE1.png')
-export const imageEvent = new Image('hoeutils_event', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ef/Wheat_JE1_BE1.png')
+export const imageCane = new Image("hoeutils_sugar_cane","https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/58/Sugar_Cane_%28item%29_JE1_BE1.png");
+export const imagePotato = new Image('hoeutils_potato', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/ff/Potato_JE1_BE1.png');
+export const imageCarrot = new Image('hoeutils_carrot', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4c/Carrot_JE2_BE1.png');
+export const imageWheat = new Image('hoeutils_wheat', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ef/Wheat_JE1_BE1.png');
+export const imageWart = new Image('hoeutils_wart', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/c/c0/Nether_Wart_%28item%29_JE1.png');
+export const imageEvent = new Image('hoeutils_event', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ef/Wheat_JE1_BE1.png');
+export const imagePumpkin = new Image('hoeutils_pumpkin', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b6/Carved_Pumpkin_%28S%29_JE4_BE2.png');
+export const imageMelon = new Image('hoeutils_melon', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/0/0d/Melon_Slice_JE1_BE1.png');
+export const imageCocoa = new Image('hoeutils_cocoa', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b3/Cocoa_Beans_JE2.png');
+export const imageCactus = new Image('hoeutils_cactus', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/29/Cactus_JE2_BE1.png');
+export const imageMushroom = new Image('hoeutils_mushroom', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/bd/Red_Mushroom_%28texture%29_JE1_BE1.png');
 
 export const collections = {
     last_updated: 0,

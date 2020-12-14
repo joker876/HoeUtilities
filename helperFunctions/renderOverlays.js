@@ -4,22 +4,27 @@ import {
     imageCarrot,
     imageWheat,
     imageWart,
-    imageEvent
+    imageEvent,
+    imagePumpkin,
+    imageMelon,
+    imageCocoa,
+    imageCactus,
+    imageMushroom,
 } from './constants';
 export function standardImages() {
     //main
     function countActiveModules() {
         const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
-        return global.hoeutils.userSettings.isCropRateEnabled
-        + (global.hoeutils.userSettings.isCounterEnabled && !heldItem.getString('id').match(/PUMPKIN|MELON|COCOA/))
-        + global.hoeutils.userSettings.isMaxEfficiencyEnabled
-        + global.hoeutils.userSettings.isCollectionEnabled
-        + (
-            global.hoeutils.userSettings.isCropRateEnabled
-            || (global.hoeutils.userSettings.isCounterEnabled && !heldItem.getString('id').match(/PUMPKIN|MELON|COCOA/))
-            || global.hoeutils.userSettings.isMaxEfficiencyEnabled
-            || global.hoeutils.userSettings.isCollectionEnabled
-        )
+        return global.hoeutils.userSettings.isCropRateEnabled +
+            (global.hoeutils.userSettings.isCounterEnabled && !heldItem.getString('id').match(/PUMPKIN|MELON|COCOA/)) +
+            global.hoeutils.userSettings.isMaxEfficiencyEnabled +
+            global.hoeutils.userSettings.isCollectionEnabled +
+            (
+                global.hoeutils.userSettings.isCropRateEnabled ||
+                (global.hoeutils.userSettings.isCounterEnabled && !heldItem.getString('id').match(/PUMPKIN|MELON|COCOA/)) ||
+                global.hoeutils.userSettings.isMaxEfficiencyEnabled ||
+                global.hoeutils.userSettings.isCollectionEnabled
+            )
     }
     global.hoeutils.imageData = {
         enabled: false,
@@ -42,21 +47,31 @@ export function standardImages() {
             global.hoeutils.imageData.yOffset = -3 * global.hoeutils.scale;
             break;
         default:
-            global.hoeutils.imageData.yOffset = -4 + 6 * (activeModuleCount-2);
+            global.hoeutils.imageData.yOffset = -4 + 6 * (activeModuleCount - 2);
     }
     const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
     if (!global.hoeutils.userSettings.isImageEnabled) return;
     try {
         if (heldItem.getString('id').match(/HOE_CANE/)) {
-            imageCane.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size)
+            imageCane.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
         } else if (heldItem.getString('id').match(/HOE_POTATO/)) {
-            imagePotato.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size)
+            imagePotato.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
         } else if (heldItem.getString('id').match(/HOE_CARROT/)) {
-            imageCarrot.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size)
+            imageCarrot.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
         } else if (heldItem.getString('id').match(/HOE_WHEAT/)) {
-            imageWheat.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size - 2, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size)
+            imageWheat.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size - 2, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
         } else if (heldItem.getString('id').match(/HOE_WARTS/)) {
-            imageWart.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size)
+            imageWart.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size + 5, global.hoeutils.data.hud.y + 4 + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
+        } else if (heldItem.getString('id').match(/PUMPKIN_DICER/)) {
+            imagePumpkin.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
+        } else if (heldItem.getString('id').match(/MELON_DICER/)) {
+            imageMelon.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size + 2, global.hoeutils.data.hud.y + 3 + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
+        } else if (heldItem.getString('id').match(/COCO_CHOPPER/)) {
+            imageCocoa.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
+        } else if (heldItem.getString('id').match(/CACTUS_KNIFE/)) {
+            imageCactus.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
+        } else if (heldItem.getString('id').match(/FUNGI_CUTTER/)) {
+            imageMushroom.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
         }
     } catch (error) {
         updateImageData();
