@@ -146,24 +146,34 @@ if (hasSkyblockAddons) {
     })
 }
 global.hoeutils.currentFarmingExpLeft = Infinity;
-global.hoeutils.isFarmingTimer = 600;
+global.hoeutils.isFarmingTimer = 0;
+global.hoeutils.wasSessionStarted = false;
 register('tick', () => {
+    if (global.hoeutils.currentFarmingExpLeft == Infinity || global.hoeutils.currentFarmingExpLeft == undefined) global.hoeutils.currentFarmingExpLeft = global.hoeutils.expToNext;
     if (global.hoeutils.currentFarmingExpLeft > global.hoeutils.expToNext) {
         global.hoeutils.farmingExpDebug = { current: global.hoeutils.currentFarmingExpLeft, toNext: global.hoeutils.expToNext };
         global.hoeutils.currentFarmingExpLeft = global.hoeutils.expToNext;
-        global.hoeutils.isFarming = 1;
-        if (global.hoeutils.isFarming == 1) {
+        if (global.hoeutils.isFarming == 0) global.hoeutils.isFarming = 1;
+        if (global.hoeutils.isFarming == 1 && !global.hoeutils.wasSessionStarted) {
+            global.hoeutils.wasSessionStarted = true;
             startSession();
             global.hoeutils.isFarming = 2;
+        }
+        if (global.hoeutils.isFarming) {
+            global.hoeutils.isFarmingTimer = 0;
         }
     }
     else global.hoeutils.isFarming = 0;
     if (!global.hoeutils.isFarming) {
         global.hoeutils.isFarmingTimer++;
     }
-    if (global.isFarmingTimer == global.hoeutils.settings.getSetting('Sessions', 'Auto restart after &8in seconds')*20) {
+    if (global.hoeutils.isFarmingTimer == global.hoeutils.settings.getSetting('Sessions', 'Auto-end after &8in seconds')*20) {
         endSession();
+        global.hoeutils.wasSessionStarted = false;
     }
+})
+register('worldUnload', () => {
+    if (global.hoeutils.wasSessionStarted) endSession();
 })
 
 register("tick", () => {
@@ -218,7 +228,7 @@ register("tick", () => {
         displayLines = produceAllLines('mushroom', { counter: true });
     } else global.hoeutils.display.setShouldRender(false)
     
-    if (heldItem.getString('id').match(/HOE_(CANE|POTATO|CARROT|WHEAT)|DICER|COCO_CHOPPER|CACTUS_KNIFE|FUNGI_CUTTER/)/*  && global.hoeutils.isFarmingTimer < 600 */) {
+    if (heldItem.getString('id').match(/HOE_(CANE|POTATO|CARROT|WHEAT)|DICER|COCO_CHOPPER|CACTUS_KNIFE|FUNGI_CUTTER/)) {
         let timerCrop
         if (heldItem.getString('id').match(/HOE_CANE/)) timerCrop = 'cane';
         else if (heldItem.getString('id').match(/HOE_POTATO/))  timerCrop = 'potato';
