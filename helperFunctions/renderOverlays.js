@@ -47,7 +47,7 @@ export function standardImages() {
             global.hoeutils.imageData.yOffset = -3 * global.hoeutils.scale;
             break;
         default:
-            global.hoeutils.imageData.yOffset = -4 + 6 * (activeModuleCount - 2);
+            global.hoeutils.imageData.yOffset = -4 + 6 * (activeModuleCount - 1);
     }
     const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
     if (!global.hoeutils.userSettings.isImageEnabled) return;
@@ -59,13 +59,13 @@ export function standardImages() {
         } else if (heldItem.getString('id').match(/HOE_CARROT/)) {
             imageCarrot.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
         } else if (heldItem.getString('id').match(/HOE_WHEAT/)) {
-            imageWheat.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size - 2, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
+            imageWheat.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
         } else if (heldItem.getString('id').match(/HOE_WARTS/)) {
-            imageWart.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size + 5, global.hoeutils.data.hud.y + 4 + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
+            imageWart.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
         } else if (heldItem.getString('id').match(/PUMPKIN_DICER/)) {
             imagePumpkin.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
         } else if (heldItem.getString('id').match(/MELON_DICER/)) {
-            imageMelon.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size + 2, global.hoeutils.data.hud.y + 3 + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
+            imageMelon.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
         } else if (heldItem.getString('id').match(/COCO_CHOPPER/)) {
             imageCocoa.draw(global.hoeutils.data.hud.x - global.hoeutils.imageData.size, global.hoeutils.data.hud.y + global.hoeutils.imageData.yOffset, global.hoeutils.imageData.size, global.hoeutils.imageData.size);
         } else if (heldItem.getString('id').match(/CACTUS_KNIFE/)) {
