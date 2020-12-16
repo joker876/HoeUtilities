@@ -105,13 +105,13 @@ export function produceAllLines(crop, settings = {}) {
 export function produceFarmingLines(crop) {
     const displayLines = [];
     const userSettings = global.hoeutils.userSettings.farmingInfo;
-    if (userSettings.isLevelEnabled || userSettings.isExpPerHourEnabled || userSettings.isTotalExpEnabled || userSettings.isExpLeftEnabled || userSettings.isETAToNextEnabled)
+    if (userSettings.isLevelEnabled || userSettings.isProgressToNextEnabled || userSettings.isExpPerHourEnabled || userSettings.isTotalExpEnabled || userSettings.isExpLeftEnabled || userSettings.isETAToNextEnabled)
         displayLines.push(new DisplayLine(`${global.hoeutils.colorSettings[crop]}&lCurrent Level Info`));
     if (global.hoeutils.hourlyXpGain) {
         if (global.hoeutils.farmingLevel != global.hoeutils.levelCap) {
             if (userSettings.isLevelEnabled) 
                 displayLines.push(new DisplayLine(` ${makeLabel(crop, 'level')}${global.hoeutils.farmingLevelRoman} (${global.hoeutils.farmingLevel})`));
-            if (userSettings.isExpPerHourEnabled) 
+            if (userSettings.isProgressToNextEnabled) 
                 displayLines.push(new DisplayLine(` ${makeLabel(crop, 'progress')}${getColorInRange(global.hoeutils.skillProgress)}${global.hoeutils.skillProgress}%`));
             if (userSettings.isTotalExpEnabled) 
                 displayLines.push(new DisplayLine(` ${makeLabel(crop, 'total_exp')}${addCommas(Math.round(global.hoeutils.totalExp*10)/10)}`));
