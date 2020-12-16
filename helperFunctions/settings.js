@@ -11,7 +11,7 @@ export default function initiateSettings() {
             new Setting.Button("", "", () => {}),
             new Setting.Button("       &dCredits", "", () => {}),
             new Setting.Button("&e&lSquagward", "Help with drag-and-drop GUI", () => {}),
-            new Setting.Button("", "", () => {}),
+            new Setting.Button("&eDawJaw", "Help with crop rate formula", () => {}),
             new Setting.Button("", "", () => {}),
             new Setting.Button("", "", () => {}),
             new Setting.Button("", "", () => {}),
@@ -42,9 +42,9 @@ export default function initiateSettings() {
         settings: [
             new Setting.Button("Click here to move the GUI >>>", "&e&lCLICK!", () => { ChatLib.command('hoeutils gui', true) }),
             new Setting.Toggle('Farming Level', true),
+            new Setting.Toggle('Progress to next level', true),
             new Setting.Toggle('Exp per hour', true),
             new Setting.Toggle('Total Exp', true),
-            new Setting.Toggle('Progress to next level', true),
             new Setting.Toggle('Exp left to next level', true),
             new Setting.Toggle('Estimated time to next level', true),
             new Setting.Toggle('Level Cap', true),
@@ -71,18 +71,17 @@ export default function initiateSettings() {
             new Setting.Slider('Remind how long before the event starts? &8in seconds', 50, 1, 240),
             new Setting.Toggle('Enable everywhere', false),
         ],
-    },/* 
+    },
     {
         name: 'Sessions',
         settings: [
             new Setting.Button("Click here to move the GUI >>>", "&e&lCLICK!", () => { ChatLib.command('hoeutils gui', true) }),
             new Setting.Slider('Scale &8in %', 100, 1, 300),
-            new Setting.Toggle('Enable images', true),
-            new Setting.Toggle('Auto-end and auto-start session', true),
+            new Setting.Toggle('Auto-start and auto-end session', true),
             new Setting.Slider('Auto restart after &8in seconds', 60, 10, 1800),
             new Setting.Toggle('Store session history', true),
         ],
-    }, */
+    },
     {
         name: 'Colors',
         settings: [

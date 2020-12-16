@@ -46,6 +46,7 @@ import { produceAllLines, produceFarmingLines } from './helperFunctions/smallFun
 import   getAPIInfo from './helperFunctions/getAPI';
 import { standardImages, timerImage } from './helperFunctions/renderOverlays';
 import   getFarmingInfo from './helperFunctions/getFarmingInfo';
+import { startSession, endSession } from './helperFunctions/session.js';
 
 updateColorSettings();
 updateUserSettings();
@@ -144,19 +145,26 @@ if (hasSkyblockAddons) {
         getFarmingInfo(current, total, gained);
     })
 }
-/* global.hoeutils.currentFarmingExpLeft = Infinity;
+global.hoeutils.currentFarmingExpLeft = Infinity;
 global.hoeutils.isFarmingTimer = 600;
 register('tick', () => {
     if (global.hoeutils.currentFarmingExpLeft > global.hoeutils.expToNext) {
-        global.hoeutils.currentFarmingExpLeft = global.hoeutils.expToNext
-        global.hoeutils.farmingExpDebug = { current: global.hoeutils.currentFarmingExpLeft, toNext: global.hoeutils.expToNext }
-        global.hoeutils.isFarming = true;
+        global.hoeutils.farmingExpDebug = { current: global.hoeutils.currentFarmingExpLeft, toNext: global.hoeutils.expToNext };
+        global.hoeutils.currentFarmingExpLeft = global.hoeutils.expToNext;
+        global.hoeutils.isFarming = 1;
+        if (global.hoeutils.isFarming == 1) {
+            startSession();
+            global.hoeutils.isFarming = 2;
+        }
     }
-    else global.hoeutils.isFarming = false;
+    else global.hoeutils.isFarming = 0;
     if (!global.hoeutils.isFarming) {
         global.hoeutils.isFarmingTimer++;
     }
-}) */
+    if (global.isFarmingTimer == global.hoeutils.settings.getSetting('Sessions', 'Auto restart after &8in seconds')*20) {
+        endSession();
+    }
+})
 
 register("tick", () => {
     const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');

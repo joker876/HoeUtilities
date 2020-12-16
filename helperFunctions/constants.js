@@ -104,7 +104,13 @@ export const dataFileStructure = {
     key: null,
     hud: { x: 20, y: 5 }, 
     timer: { x: Renderer.screen.getWidth() - 40, y: 5 },
-    farming: { x: Renderer.screen.getWidth() - 175, y: 5 }
+    farming: { x: Renderer.screen.getWidth() - 175, y: 5 },
+    session: { x: Renderer.screen.getWidth() - 100, y: 100 },
+}
+
+export const sessionFileStructure = {
+    startingTotalExp: 0,
+    seconds: 0,
 }
 
 export const imageCane = new Image("hoeutils_sugar_cane","https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/58/Sugar_Cane_%28item%29_JE1_BE1.png");
