@@ -78,7 +78,7 @@ export default function initiateSettings() {
             new Setting.Button("Click here to move the GUI >>>", "&e&lCLICK!", () => { ChatLib.command('hoeutils gui', true) }),
             new Setting.Slider('Scale &8in %', 100, 1, 300),
             new Setting.Toggle('Auto-start and auto-end session', true),
-            new Setting.Slider('Auto restart after &8in seconds', 60, 10, 1800),
+            new Setting.Slider('Auto-end after &8in seconds', 60, 10, 1800),
             new Setting.Toggle('Store session history', true),
         ],
     },
