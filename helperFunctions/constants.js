@@ -91,10 +91,10 @@ export const colors = {
 
 export const baseCropDrops = {
     cane: 1*2,
-    potato: 3,
-    carrot: 3,
+    potato: 3.5,
+    carrot: 3.5,
     wheat: 1,
-    wart: 3,
+    wart: 3.5,
     pumpkin: 1,
     melon: 4.64,
     cocoa: 2.5,
