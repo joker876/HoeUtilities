@@ -25,6 +25,7 @@ export default function getCropRate() {
     
     //multiDropChance
     const lore = JSON.parse(Player.getHeldItem().getRawNBT().match(/Lore:(\[.+\])/)[1].replace(/\d+:/g, ''));
+    global.hoeutils.debug.lore = lore;
     let rarity;
     for (let i = 1; i <= 6; i++) {
         if (lore[lore.length - i].match(/(COMMON|UNCOMMON|RARE|EPIC|LEGENDARY|MYTHIC)/)) {
@@ -94,12 +95,16 @@ export default function getCropRate() {
     global.hoeutils.debug.croprate.stages.push(cropRate); //5
 
     //cropRate
-    if (heldItem.getString('id').match(/HOE_(CANE|POTATO|CARROT|WHEAT|WART)/)) {
+    if (heldItem.getString('id').match(/HOE_(CANE|POTATO|CARROT|WHEAT|WART)_[23]/)) {
         lore.forEach(str => {
             str = ChatLib.removeFormatting(str);
             if (str.match(/Counter bonus: \+(\d{1,3})%/i)) {
                 cropRate += Number(str.match(/Counter bonus: \+(\d{1,3})%/i)[1]);
                 global.hoeutils.debug.croprate.counter = Number(str.match(/Counter bonus: \+(\d{1,3})%/i)[1]);
+            }
+            if (str.match(/Collection bonus: \+(\d{1,3})%/i)) {
+                cropRate += Number(str.match(/Collection bonus: \+(\d{1,3})%/i)[1]);
+                global.hoeutils.debug.croprate.collection = Number(str.match(/Collection bonus: \+(\d{1,3})%/i)[1]);
             }
         });
     }
