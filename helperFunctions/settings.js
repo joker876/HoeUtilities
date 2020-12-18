@@ -31,6 +31,7 @@ export default function initiateSettings() {
             new Setting.Toggle('Hoe Lock', true),
             new Setting.Toggle('Event Reminder', true),
             new Setting.Toggle('Event Timer', true),
+            new Setting.Toggle('Sessions (WIP)', false),
             new Setting.Button("", "", () => {}),
             new Setting.Button("Don't know what a certain feature is?", "&e&lCLICK!", () => { ChatLib.command('hoeutils help features', true) }),
             new Setting.Button("A feature isn't working?", "&c&lCLICK!", () => { ChatLib.command('hoeutils help problems', true) }),
@@ -77,8 +78,8 @@ export default function initiateSettings() {
         settings: [
             new Setting.Button("Click here to move the GUI >>>", "&e&lCLICK!", () => { ChatLib.command('hoeutils gui', true) }),
             new Setting.Slider('Scale &8in %', 100, 1, 300),
-            new Setting.Toggle('Auto-start and auto-end session', true),
-            new Setting.Slider('Auto-end after &8in seconds', 60, 10, 1800),
+            new Setting.Toggle('Auto-start and auto-end session', false),
+            new Setting.Slider('Auto-end after &8in seconds', 120, 10, 1800),
             new Setting.Toggle('Store session history', true),
         ],
     },
@@ -105,7 +106,7 @@ export default function initiateSettings() {
             new Setting.StringSelector('Cactus', 2, Object.keys(colors)),
         ]
     }
-    ]).setCommand('hoeutilities').setSize(450, 200);
+    ]).setCommand('hoeutilities').setSize(450, 210);
     Setting.register(settings);
 
     global.hoeutils.settings = settings

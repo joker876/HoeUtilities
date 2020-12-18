@@ -145,10 +145,12 @@ if (hasSkyblockAddons) {
         getFarmingInfo(current, total, gained);
     })
 }
+
 global.hoeutils.currentFarmingExpLeft = Infinity;
 global.hoeutils.isFarmingTimer = 0;
 global.hoeutils.wasSessionStarted = false;
 register('tick', () => {
+    if (global.hoeutils.settings.getSetting('Features', 'Sessions (WIP)')) return;
     if (global.hoeutils.currentFarmingExpLeft == Infinity || global.hoeutils.currentFarmingExpLeft == undefined) global.hoeutils.currentFarmingExpLeft = global.hoeutils.expToNext;
     if (global.hoeutils.currentFarmingExpLeft > global.hoeutils.expToNext) {
         global.hoeutils.farmingExpDebug = { current: global.hoeutils.currentFarmingExpLeft, toNext: global.hoeutils.expToNext };
@@ -173,6 +175,7 @@ register('tick', () => {
     }
 })
 register('worldUnload', () => {
+    if (global.hoeutils.settings.getSetting('Features', 'Sessions (WIP)')) return;
     if (global.hoeutils.wasSessionStarted) endSession();
 })
 
