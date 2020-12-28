@@ -4,7 +4,6 @@ export function apiKeyGrabber(apiKey) {
     setTimeout(() => {
         ChatLib.chat(`&a[HoeUtilities] &eAPI Key set!\n`);
         getAPIInfo('collection');
-        getAPIInfo('farming');
     }, 100);
     return;
 }

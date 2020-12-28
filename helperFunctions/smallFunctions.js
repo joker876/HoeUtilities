@@ -1,4 +1,4 @@
-import { baseCropDrops, romanNums, units } from './constants';
+import { baseCropDrops, romanNums } from './constants';
 import getAPIInfo from './getAPI';
 import getCropRate from './getCropRate';
 
@@ -74,30 +74,13 @@ export function addCommas(str) {
 export function getMaxEfficiencyYield(cropRate, crop, replenishModif = 0) {
     const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
     let randomDrops = 0;
-    let unit = units[global.hoeutils.settings.getSetting('Tool Info', 'Yield Unit')];
-    let unitModif;
-    switch(unit) {
-        case '/h': 
-            unitModif = 20 * 60 * 60;
-            break;
-        case '/event': 
-            unitModif = 20 * 60 * 20;
-            break;
-        case '/min': 
-            unitModif = 20 * 60;
-            break;
-        case '/s': 
-            unitModif = 20;
-            break;
-        default: unitModif = 1;
-    }
     if (heldItem.getString('id').match(/PUMPKIN_DICER/)) {
-        randomDrops = (64*0.00114 + 160*0.00043 + 10*160*0.00007 + 64*160*0.00001) * unitModif;
+        randomDrops = 64*0.114 + 160*0.043 + 10*160*0.007 + 64*160*0.001;
     }
     else if (heldItem.getString('id').match(/MELON_DICER/)) {
-        randomDrops = (160*0.00114 + 5*160*0.00043 + 50*160*0.00007 + 2*160*160*0.00001) * unitModif;
+        randomDrops = 160*0.114 + 5*160*0.043 + 50*160*0.007 + 2*160*160*0.001;
     }
-    return addCommas(Math.round((cropRate/100 * baseCropDrops[crop]) * unitModif - replenishModif + randomDrops))+'/h';
+    return addCommas(Math.round((cropRate/100 * baseCropDrops[crop]) * 20 * 60 * 60 - replenishModif + randomDrops))+'/h';
 }
 export function makeTimer(seconds, charsFromStart, amountOfChars) {
     return new Date(seconds * 1000).toISOString().substr(charsFromStart ?? 14, amountOfChars ?? 5);

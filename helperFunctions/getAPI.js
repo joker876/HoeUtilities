@@ -16,7 +16,10 @@ const sendRequest = (url) => {
 }
 export default function getAPIInfo (type, firstLoad) {
     global.hoeutils.debug.getCollectionsStages = {};
-    if (!global.hoeutils.data.key) return;
+    if (!global.hoeutils.data.key) {
+        ChatLib.chat('&cPlease set your API key! Use &f/api new &ccommand to do so.');
+        return;
+    }
     let uuid = Player.getUUID()
     global.hoeutils.debug.getCollectionsStages.uuid = uuid;
     global.hoeutils.debug.getCollectionsStages.key = global.hoeutils.data.key;
@@ -47,7 +50,7 @@ export default function getAPIInfo (type, firstLoad) {
             });
 
             const profile = profiletimes[Math.max.apply(null, profilekeys)].profile.members[plainUUID];
-            FileLib.write('HoeUtilities', './profileDump.json', JSON.stringify(profile, null, 4));
+
             if (type == 'collection') {
                 const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
                 const counter = heldItem.getInteger('mined_crops')

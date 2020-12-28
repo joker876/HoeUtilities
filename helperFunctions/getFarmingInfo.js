@@ -9,7 +9,7 @@ export default function getFarmingInfo(current, total, gained) {
     else skillCurves.forEach((level, i) => {
             if (current == level - skillCurves[i - 1]) {
                 global.hoeutils.farmingLevel = i;
-                totalExp = skillCurves[i-1];
+                totalExp = skillCurves[i];
             }
         })
     global.hoeutils.hourlyXpGain = calculateXpGain(gained);
@@ -26,7 +26,7 @@ export default function getFarmingInfo(current, total, gained) {
 
     global.hoeutils.farmingLevelRoman = Object.keys(romanNums)[global.hoeutils.farmingLevel-1];
 
-    global.hoeutils.progressToMax = calcSkillProgress(totalExp, skillCurves[global.hoeutils.levelCap], 1000)
+    global.hoeutils.progressToMax = calcSkillProgress(totalExp, skillCurves[global.hoeutils.levelCap-1], 1000)
     global.hoeutils.expToMax = Math.round(skillCurves[global.hoeutils.levelCap-1]*10 - totalExp*10)/10;
     global.hoeutils.etaToMax = decimalToTime(global.hoeutils.expToMax/global.hoeutils.hourlyXpGain);
 }

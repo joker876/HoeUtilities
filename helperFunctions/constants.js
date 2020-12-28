@@ -70,13 +70,6 @@ export const romanNums = {
     'LX': 60,
 }
 
-export const units = {
-    'Drops/hour': '/h',
-    'Drops/event': '/event',
-    'Drops/minute': '/min',
-    'Drops/second': '/s',
-}
-
 export const colors = {
     '&0Black': '&0',
     '&1Dark Blue': '&1',
@@ -98,12 +91,12 @@ export const colors = {
 
 export const baseCropDrops = {
     cane: 1*2,
-    potato: 3,
-    carrot: 3,
+    potato: 3.5,
+    carrot: 3.5,
     wheat: 1,
-    wart: 2.5,
+    wart: 3.5,
     pumpkin: 1,
-    melon: 5,
+    melon: 4.64,
     cocoa: 2.5,
 }
 
@@ -120,7 +113,7 @@ export const sessionFileStructure = {
     seconds: 0,
 }
 
-/* export const imageCane = new Image("hoeutils_sugar_cane","https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/58/Sugar_Cane_%28item%29_JE1_BE1.png");
+export const imageCane = new Image("hoeutils_sugar_cane","https://static.wikia.nocookie.net/minecraft_gamepedia/images/5/58/Sugar_Cane_%28item%29_JE1_BE1.png");
 export const imagePotato = new Image('hoeutils_potato', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/f/ff/Potato_JE1_BE1.png');
 export const imageCarrot = new Image('hoeutils_carrot', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/4/4c/Carrot_JE2_BE1.png');
 export const imageWheat = new Image('hoeutils_wheat', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/e/ef/Wheat_JE1_BE1.png');
@@ -131,18 +124,6 @@ export const imageMelon = new Image('hoeutils_melon', 'https://static.wikia.noco
 export const imageCocoa = new Image('hoeutils_cocoa', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b3/Cocoa_Beans_JE2.png');
 export const imageCactus = new Image('hoeutils_cactus', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/2/29/Cactus_JE2_BE1.png');
 export const imageMushroom = new Image('hoeutils_mushroom', 'https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/bd/Red_Mushroom_%28texture%29_JE1_BE1.png');
- */
-export const imageCane = new Item('minecraft:reeds');
-export const imagePotato = new Item('minecraft:potato');
-export const imageCarrot = new Item('minecraft:carrot');
-export const imageWheat = new Item('minecraft:wheat');
-export const imageWart = new Item('minecraft:nether_wart');
-export const imagePumpkin = new Item('minecraft:pumpkin');
-export const imageMelon = new Item('minecraft:melon');
-export const imageCocoa = new Item('minecraft:dye').setDamage(3);
-export const imageCactus = new Item('minecraft:cactus');
-export const imageMushroom = new Item('minecraft:red_mushroom');
-export const imageEvent = imageWheat;
 
 export const collections = {
     last_updated: 0,
@@ -158,7 +139,7 @@ export const collections = {
     cactus: 0,
 }
 
-export const skillCurves = [50, 175, 375, 675, 1175, 1925, 2925, 4425, 6425, 9925/* 10 */, 14925, 22425, 32425, 47425, 67425, 97425, 147425, 222425, 322425, 522425/* 20 */, 822425, 1222425, 1722425, 2322425, 3022425, 3822425, 4722425, 5722425, 6822425, 8022425/* 30 */, 9322425, 10722425, 12222425, 13822425, 15522425, 17322425, 19222425, 21222425, 23322425, 25522425/* 40 */, 27822425, 30222425, 32722425, 35322425, 38072425, 40972425, 44072425, 47472425, 51172425, 55172425/* 50 */, 59472425, 64072425, 68972452, 74172425, 79672425, 85472425, 91572425, 97972425, 104672425, 111672425/* 60 */];
+export const skillCurves = [50, 175, 375, 675, 1175, 1925, 2925, 4425, 6425, 9925, 14925, 22425, 32425, 47425, 67425, 97425, 147425, 222425, 322425, 522425, 822425, 1222425, 1722425, 2322425, 3022425, 3822425, 4722425, 5722425, 6822425, 8022425, 9322425, 10722425, 12222425, 13822425, 15522425, 17322425, 19222425, 21222425, 23322425, 25522425, 27822425, 30222425, 32722425, 35322425, 38072425, 40972425, 44072425, 47472425, 51172425, 55172425, 59472425, 64072425, 68972452, 74172425, 79672425, 85472425, 91572425, 97972425, 104672425, 111672425];
 
 export const prefix = '&l&2[&aHoeUtilities&2]&r';
 export const title = `&c==========< ${prefix} &c>==========\n`;
