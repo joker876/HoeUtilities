@@ -42,6 +42,7 @@ register('playerInteract', hoeLock);
 import { apiKeyGrabber, apiKeyChatCriteria } from './helperFunctions/apiKeyGrabber';
 import   anitaBonusGrabber from './helperFunctions/anitaBonusGrabber';
 import { commandHandler } from './helperFunctions/commandHandler';
+import { updateColorSettings, updateUserSettings, updateImageData, updateScale, countActiveModules } from './helperFunctions/tickUpdates';
 import { produceAllLines, produceFarmingLines } from './helperFunctions/smallFunctions';
 import   getAPIInfo from './helperFunctions/getAPI';
 import { standardImages, timerImage } from './helperFunctions/renderOverlays';
@@ -149,6 +150,7 @@ global.hoeutils.currentFarmingExpLeft = Infinity;
 global.hoeutils.isFarmingTimer = 0;
 global.hoeutils.wasSessionStarted = false;
 register('tick', () => {
+    if (!global.hoeutils.settings.getSetting('Features', 'Sessions (WIP)')) return;
     if (global.hoeutils.currentFarmingExpLeft == Infinity || global.hoeutils.currentFarmingExpLeft == undefined) global.hoeutils.currentFarmingExpLeft = global.hoeutils.expToNext;
     if (global.hoeutils.currentFarmingExpLeft > global.hoeutils.expToNext) {
         global.hoeutils.farmingExpDebug = { current: global.hoeutils.currentFarmingExpLeft, toNext: global.hoeutils.expToNext };
@@ -243,6 +245,9 @@ register("tick", () => {
         global.hoeutils.farmingDisplay.setShouldRender(true)
         farmingDisplayLines = produceFarmingLines(timerCrop)
     } else global.hoeutils.farmingDisplay.setShouldRender(false)
+    if (!global.hoeutils.settings.getSetting('Features', 'Farming Info')) {
+        global.hoeutils.farmingDisplay.setShouldRender(false);
+    } 
 
     displayLines.forEach((line, i) => {
         global.hoeutils.display.setLine(i, line.setShadow(true).setScale(global.hoeutils.scale))
