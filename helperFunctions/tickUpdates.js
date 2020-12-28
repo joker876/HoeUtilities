@@ -2,7 +2,7 @@ import { colors } from './constants';
 import { makeTimer } from '../helperFunctions/smallFunctions';
 const settings = global.hoeutils.settings
 
-global.hoeutils.colorSettings = {
+const colorSettingsTemplate = {
     main: colors[settings.getSetting('Colors', 'Main')],
     numbers: colors[settings.getSetting('Colors', 'Numbers')],
     timer: colors[settings.getSetting('Colors', 'Timer')],
@@ -16,7 +16,33 @@ global.hoeutils.colorSettings = {
     cocoa: colors[settings.getSetting('Colors #2', 'Cocoa')],
     mushroom: colors[settings.getSetting('Colors #2', 'Mushrooms')],
     cactus: colors[settings.getSetting('Colors #2', 'Cactus')],
-}
+};
+global.hoeutils.colorSettings = colorSettingsTemplate;
+const userSettingsTemplate = {
+    isCounterEnabled: settings.getSetting('Features', 'Counter'),
+    isCropRateEnabled: settings.getSetting('Features', 'Crop Rate'),
+    isMaxEfficiencyEnabled: settings.getSetting('Features', 'Hourly Drops'),
+    isCollectionEnabled: settings.getSetting('Features', 'Collection'),
+    isHoeLockEnabled: settings.getSetting('Features', 'Hoe Lock'),
+    isEventReminderEnabled: settings.getSetting('Features', 'Event Reminder'),
+    isEventTimerEnabled: settings.getSetting('Features', 'Event Timer'),
+    isEventTimerEnabledEverywhere: settings.getSetting('Timer', 'Enable everywhere'),
+    isImageEnabled: settings.getSetting('Tool Info', 'Enable images'),
+    isEventImageEnabled: settings.getSetting('Timer', 'Enable image'),
+    farmingInfo: {
+        isLevelEnabled: settings.getSetting('Farming Info', 'Farming Level'),
+        isExpPerHourEnabled: settings.getSetting('Farming Info', 'Exp per hour'),
+        isTotalExpEnabled: settings.getSetting('Farming Info', 'Total Exp'),
+        isProgressToNextEnabled: settings.getSetting('Farming Info', 'Progress to next level'),
+        isExpLeftEnabled: settings.getSetting('Farming Info', 'Exp left to next level'),
+        isETAToNextEnabled: settings.getSetting('Farming Info', 'Estimated time to next level'),
+        isLevelCapEnabled: settings.getSetting('Farming Info', 'Level Cap'),
+        isProgressToMaxEnabled: settings.getSetting('Farming Info', 'Progress to level cap'),
+        isExpLeftToMaxEnabled: settings.getSetting('Farming Info', 'Exp left to level cap'),
+        isETAToMaxEnabled: settings.getSetting('Farming Info', 'Estimated time to level cap'),
+    }
+};
+global.hoeutils.userSettings = userSettingsTemplate;
 export function updateColorSettings() {
     global.hoeutils.colorSettings = {
         main: colors[settings.getSetting('Colors', 'Main')],
@@ -44,7 +70,7 @@ export function updateUserSettings() {
         isEventReminderEnabled: settings.getSetting('Features', 'Event Reminder'),
         isEventTimerEnabled: settings.getSetting('Features', 'Event Timer'),
         isEventTimerEnabledEverywhere: settings.getSetting('Timer', 'Enable everywhere'),
-        isImageEnabled: settings.getSetting('Settings', 'Enable images'),
+        isImageEnabled: settings.getSetting('Tool Info', 'Enable images'),
         isEventImageEnabled: settings.getSetting('Timer', 'Enable image'),
         farmingInfo: {
             isLevelEnabled: settings.getSetting('Farming Info', 'Farming Level'),
@@ -61,14 +87,28 @@ export function updateUserSettings() {
     }
 }
 export function updateScale() {
-    global.hoeutils.scale = settings.getSetting('Settings', 'Scale &8in %') / 100
+    global.hoeutils.scale = settings.getSetting('Tool Info', 'Scale &8in %') / 100
     global.hoeutils.timerScale = settings.getSetting('Timer', 'Scale &8in %') / 100
     global.hoeutils.farmingScale = settings.getSetting('Farming Info', 'Scale &8in %') / 100
 }
+export function countActiveModules() {
+    const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
+    global.hoeutils.activeModuleCount = global.hoeutils.userSettings.isCropRateEnabled +
+        (global.hoeutils.userSettings.isCounterEnabled && !heldItem.getString('id').match(/PUMPKIN|MELON|COCOA/)) +
+        global.hoeutils.userSettings.isMaxEfficiencyEnabled +
+        global.hoeutils.userSettings.isCollectionEnabled +
+        (
+            global.hoeutils.userSettings.isCropRateEnabled ||
+            (global.hoeutils.userSettings.isCounterEnabled && !heldItem.getString('id').match(/PUMPKIN|MELON|COCOA/)) ||
+            global.hoeutils.userSettings.isMaxEfficiencyEnabled ||
+            global.hoeutils.userSettings.isCollectionEnabled
+        )
+}
 export function updateImageData() {
     global.hoeutils.eventImageData = {
+        scale: global.hoeutils.timerScale,
+        yOffset: -4 * global.hoeutils.timerScale,
         size: 14 * global.hoeutils.timerScale,
-        yOffset: -4 * global.hoeutils.timerScale
     }
     const sampleTimestamp = 1606691700
     const timestamp = Math.floor(Date.now() / 1000)
