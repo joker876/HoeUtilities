@@ -1,13 +1,14 @@
 import { dataFileStructure, collections } from './helperFunctions/constants'
 
-let data = JSON.parse(FileLib.read('hoeutilities', './data.json'));
+let data = JSON.parse(FileLib.read('HoeUtilities', './data.json'));
 if (!data) {
-    FileLib.write('hoeutilities', './data.json', JSON.stringify(dataFileStructure));
-    data = JSON.parse(FileLib.read('hoeutilities', './data.json'));
+    FileLib.write('HoeUtilities', './data.json', JSON.stringify(dataFileStructure));
+    data = JSON.parse(FileLib.read('HoeUtilities', './data.json'));
 }
 global.hoeutils = { data, debug: { exp: {} } };
+global.hoeutils.loadTimestamp = Date.now()
 
-global.hoeutils.metadata = JSON.parse(FileLib.read('hoeutilities', './metadata.json'));
+global.hoeutils.metadata = JSON.parse(FileLib.read('HoeUtilities', './metadata.json'));
 
 global.hoeutils.gui = new Gui();
 global.hoeutils.display = new Display()
@@ -41,7 +42,6 @@ register('playerInteract', hoeLock);
 import { apiKeyGrabber, apiKeyChatCriteria } from './helperFunctions/apiKeyGrabber';
 import   anitaBonusGrabber from './helperFunctions/anitaBonusGrabber';
 import { commandHandler } from './helperFunctions/commandHandler';
-import { updateColorSettings, updateUserSettings, updateImageData, updateScale } from './helperFunctions/tickUpdates';
 import { produceAllLines, produceFarmingLines } from './helperFunctions/smallFunctions';
 import   getAPIInfo from './helperFunctions/getAPI';
 import { standardImages, timerImage } from './helperFunctions/renderOverlays';
@@ -62,7 +62,6 @@ register('chat', anitaBonusGrabber).setCriteria('${message}');
 //command handler
 register('command', commandHandler).setName('hoeutils');
 
-//collections
 getAPIInfo('collection', true);
 getAPIInfo('farming', true)
 register('step', () => getAPIInfo('collection')).setDelay(240);
@@ -74,7 +73,7 @@ register('renderOverlay', standardImages);
 register('renderOverlay', timerImage);
 
 register('step', () => {
-    if (!global.hoeutils.stopData) FileLib.write('hoeutilities', './data.json', JSON.stringify(global.hoeutils.data));
+    if (!global.hoeutils.stopData) FileLib.write('HoeUtilities', './data.json', JSON.stringify(global.hoeutils.data));
     const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
     const counter = heldItem.getInteger('mined_crops');
     if (heldItem.getString('id').match(/HOE_CANE/) && global.hoeutils.collections.cane.counter == 0) {
@@ -150,7 +149,6 @@ global.hoeutils.currentFarmingExpLeft = Infinity;
 global.hoeutils.isFarmingTimer = 0;
 global.hoeutils.wasSessionStarted = false;
 register('tick', () => {
-    if (global.hoeutils.settings.getSetting('Features', 'Sessions (WIP)')) return;
     if (global.hoeutils.currentFarmingExpLeft == Infinity || global.hoeutils.currentFarmingExpLeft == undefined) global.hoeutils.currentFarmingExpLeft = global.hoeutils.expToNext;
     if (global.hoeutils.currentFarmingExpLeft > global.hoeutils.expToNext) {
         global.hoeutils.farmingExpDebug = { current: global.hoeutils.currentFarmingExpLeft, toNext: global.hoeutils.expToNext };
