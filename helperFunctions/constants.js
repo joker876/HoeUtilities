@@ -75,6 +75,7 @@ export const units = {
     'Drops/event': '/event',
     'Drops/minute': '/min',
     'Drops/second': '/s',
+    'Drops/harvest': '/harvest',
 }
 
 export const colors = {
@@ -143,6 +144,9 @@ export const imageCocoa = new Item('minecraft:dye').setDamage(3);
 export const imageCactus = new Item('minecraft:cactus');
 export const imageMushroom = new Item('minecraft:red_mushroom');
 export const imageEvent = imageWheat;
+export const imageBronze = new Item('minecraft:brick');
+export const imageSilver = new Item('minecraft:iron_ingot');
+export const imageGold = new Item('minecraft:gold_ingot');
 
 export const collections = {
     last_updated: 0,
