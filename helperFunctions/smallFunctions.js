@@ -32,40 +32,6 @@ export function getColorInRange(num) {
     if (num >= 10) return '&c';
     return '&4';
 }
-export function makeLabel(crop, type) {
-    if (type == 'counter') {
-        return `${global.hoeutils.colorSettings[crop]}[${global.hoeutils.colorSettings.main}Counter${global.hoeutils.colorSettings[crop]}]&f: ${global.hoeutils.colorSettings.numbers}`;
-    }
-    else if (type == 'max_efficiency') {
-        return `${global.hoeutils.colorSettings[crop]}[${global.hoeutils.colorSettings.main}Max Yield${global.hoeutils.colorSettings[crop]}]&f: ${global.hoeutils.colorSettings.numbers}`;
-    }
-    else if (type == 'level') {
-        return `${global.hoeutils.colorSettings[crop]}[${global.hoeutils.colorSettings.main}Farming Level${global.hoeutils.colorSettings[crop]}]&f: ${global.hoeutils.colorSettings.numbers}`;
-    }
-    else if (type == 'collection') {
-        return `${global.hoeutils.colorSettings[crop]}[${global.hoeutils.colorSettings.main}Collection${global.hoeutils.colorSettings[crop]}]&f: ${global.hoeutils.colorSettings.numbers}`;
-    }
-    else if (type == 'max_exp') {
-        return `${global.hoeutils.colorSettings[crop]}[${global.hoeutils.colorSettings.main}Exp Gain${global.hoeutils.colorSettings[crop]}]&f: ${global.hoeutils.colorSettings.numbers}`;
-    }
-    else if (type == 'total_exp') {
-        return `${global.hoeutils.colorSettings[crop]}[${global.hoeutils.colorSettings.main}Total Exp${global.hoeutils.colorSettings[crop]}]&f: ${global.hoeutils.colorSettings.numbers}`;
-    }
-    else if (type == 'progress') {
-        return `${global.hoeutils.colorSettings[crop]}[${global.hoeutils.colorSettings.main}Progress${global.hoeutils.colorSettings[crop]}]&f: ${global.hoeutils.colorSettings.numbers}`;
-    }
-    else if (type == 'exp_left') {
-        return `${global.hoeutils.colorSettings[crop]}[${global.hoeutils.colorSettings.main}Exp Left${global.hoeutils.colorSettings[crop]}]&f: ${global.hoeutils.colorSettings.numbers}`;
-    }
-    else if (type == 'eta') {
-        return `${global.hoeutils.colorSettings[crop]}[${global.hoeutils.colorSettings.main}ETA${global.hoeutils.colorSettings[crop]}]&f: ${global.hoeutils.colorSettings.numbers}`;
-    }
-    else if (type == 'level_cap') {
-        return `${global.hoeutils.colorSettings[crop]}[${global.hoeutils.colorSettings.main}Level Cap${global.hoeutils.colorSettings[crop]}]&f: ${global.hoeutils.colorSettings.numbers}`;
-    }
-    else {
-        return `${global.hoeutils.colorSettings[crop]}[${global.hoeutils.colorSettings.main}Crop Rate${global.hoeutils.colorSettings[crop]}]&f: ${global.hoeutils.colorSettings.numbers}`;
-    }
 export function makeLabel(crop, string) {
     return `${global.hoeutils.colorSettings[crop]}[${global.hoeutils.colorSettings.main}${string}${global.hoeutils.colorSettings[crop]}]&f: ${global.hoeutils.colorSettings.numbers}`;
 }
@@ -91,7 +57,6 @@ export function getMaxEfficiencyYield(cropRate, crop, replenishModif = 0) {
         case '/s': 
             unitModif = 20;
             break;
-        default: unitModif = 1;
         case '/harvest': 
             unitModif = 1;
             break;
@@ -102,7 +67,6 @@ export function getMaxEfficiencyYield(cropRate, crop, replenishModif = 0) {
     else if (heldItem.getString('id').match(/MELON_DICER/)) {
         randomDrops = (160*0.00114 + 5*160*0.00043 + 50*160*0.00007 + 2*160*160*0.00001) * unitModif;
     }
-    return addCommas(Math.round((cropRate/100 * baseCropDrops[crop]) * unitModif - replenishModif + randomDrops))+'/h';
     return addCommas(Math.round((cropRate/100 * baseCropDrops[crop]) * unitModif - replenishModif + randomDrops))+unit;
 }
 export function makeTimer(seconds, charsFromStart, amountOfChars) {
@@ -140,10 +104,6 @@ export function produceAllLines(crop, settings = {}) {
         || (!settings.collection && global.hoeutils.userSettings.isCollectionEnabled)
     ) displayLines.push(new DisplayLine(`${global.hoeutils.colorSettings[crop]}&lTool Info`));
     if ((!settings.counter || !settings.cropRate) && (global.hoeutils.userSettings.isCropRateEnabled|| global.hoeutils.userSettings.isMaxEfficiencyEnabled)) cropRate = getCropRate()
-    if (!settings.counter && global.hoeutils.userSettings.isCounterEnabled) displayLines.push(new DisplayLine(' '+makeLabel(crop, 'counter') + addCommas(counter)));
-    if (!settings.cropRate && global.hoeutils.userSettings.isCropRateEnabled) displayLines.push(new DisplayLine(' '+makeLabel(crop) + (global.hoeutils.farmingLevel ? Math.round(cropRate*100)/100 + '%' : '&cHarvest crops...')));
-    if (!settings.maxEff && global.hoeutils.userSettings.isMaxEfficiencyEnabled) displayLines.push(new DisplayLine(' '+makeLabel(crop, 'max_efficiency') + (global.hoeutils.farmingLevel ? getMaxEfficiencyYield(cropRate, crop, settings.replenishModif ?? 0) : '&cHarvest crops...')));
-    if (!settings.collection && global.hoeutils.userSettings.isCollectionEnabled) displayLines.push(new DisplayLine(' '+makeLabel(crop, 'collection') + addCommas(calculateCollection(crop, counter))));
     if (!settings.counter && global.hoeutils.userSettings.isCounterEnabled) displayLines.push(new DisplayLine(' '+makeLabel(crop, 'Counter') + addCommas(counter)));
     if (!settings.cropRate && global.hoeutils.userSettings.isCropRateEnabled) displayLines.push(new DisplayLine(' '+makeLabel(crop, 'Crop Rate') + (global.hoeutils.farmingLevel ? Math.round(cropRate*100)/100 + '%' : '&cHarvest crops...')));
     if (!settings.maxEff && global.hoeutils.userSettings.isMaxEfficiencyEnabled) displayLines.push(new DisplayLine(' '+makeLabel(crop, 'Max Yield') + (global.hoeutils.farmingLevel ? getMaxEfficiencyYield(cropRate, crop, settings.replenishModif ?? 0) : '&cHarvest crops...')));
@@ -159,22 +119,16 @@ export function produceFarmingLines(crop) {
     if (global.hoeutils.hourlyXpGain) {
         if (global.hoeutils.farmingLevel != global.hoeutils.levelCap) {
             if (userSettings.isLevelEnabled) 
-                displayLines.push(new DisplayLine(` ${makeLabel(crop, 'level')}${global.hoeutils.farmingLevelRoman} (${global.hoeutils.farmingLevel})`));
                 displayLines.push(new DisplayLine(` ${makeLabel(crop, 'Farming Level')}${global.hoeutils.farmingLevelRoman} (${global.hoeutils.farmingLevel})`));
             if (userSettings.isProgressToNextEnabled) 
-                displayLines.push(new DisplayLine(` ${makeLabel(crop, 'progress')}${getColorInRange(global.hoeutils.skillProgress)}${global.hoeutils.skillProgress}%`));
                 displayLines.push(new DisplayLine(` ${makeLabel(crop, 'Progress')}${getColorInRange(global.hoeutils.skillProgress)}${global.hoeutils.skillProgress}%`));
             if (userSettings.isTotalExpEnabled) 
-                displayLines.push(new DisplayLine(` ${makeLabel(crop, 'total_exp')}${addCommas(Math.round(global.hoeutils.totalExp*10)/10)}`));
                 displayLines.push(new DisplayLine(` ${makeLabel(crop, 'Total Exp')}${addCommas(Math.round(global.hoeutils.totalExp*10)/10)}`));
             if (userSettings.isExpPerHourEnabled) 
-                displayLines.push(new DisplayLine(` ${makeLabel(crop, 'max_exp')}${addCommas(global.hoeutils.hourlyXpGain)}/h`));
                 displayLines.push(new DisplayLine(` ${makeLabel(crop, 'Exp Yield')}${addCommas(global.hoeutils.hourlyXpGain)}/h`));
             if (userSettings.isExpLeftEnabled) 
-                displayLines.push(new DisplayLine(` ${makeLabel(crop, 'exp_left')}${addCommas(global.hoeutils.expToNext)}`));
                 displayLines.push(new DisplayLine(` ${makeLabel(crop, 'Exp Left')}${addCommas(global.hoeutils.expToNext)}`));
             if (userSettings.isETAToNextEnabled) 
-                displayLines.push(new DisplayLine(` ${makeLabel(crop, 'eta')}${global.hoeutils.etaToNext}`));
                 displayLines.push(new DisplayLine(` ${makeLabel(crop, 'ETA')}${global.hoeutils.etaToNext}`));
         }
         else displayLines.push(new DisplayLine(` ${global.hoeutils.colorSettings.main}You reached the level cap!`));
@@ -186,16 +140,12 @@ export function produceFarmingLines(crop) {
         if (global.hoeutils.levelCap) {
             if (global.hoeutils.farmingLevel != global.hoeutils.levelCap) {
                 if (userSettings.isLevelCapEnabled) 
-                    displayLines.push(new DisplayLine(` ${makeLabel(crop, 'level_cap')}${Object.keys(romanNums)[global.hoeutils.levelCap-1]} (${global.hoeutils.levelCap})`));
                     displayLines.push(new DisplayLine(` ${makeLabel(crop, 'Level Cap')}${Object.keys(romanNums)[global.hoeutils.levelCap-1]} (${global.hoeutils.levelCap})`));
                 if (userSettings.isProgressToMaxEnabled) 
-                    displayLines.push(new DisplayLine(` ${makeLabel(crop, 'progress')}${getColorInRange(global.hoeutils.progressToMax)}${global.hoeutils.progressToMax}%`));
                     displayLines.push(new DisplayLine(` ${makeLabel(crop, 'Progress')}${getColorInRange(global.hoeutils.progressToMax)}${global.hoeutils.progressToMax}%`));
                 if (userSettings.isExpLeftToMaxEnabled) 
-                    displayLines.push(new DisplayLine(` ${makeLabel(crop, 'exp_left')}${addCommas(global.hoeutils.expToMax)}`));
                     displayLines.push(new DisplayLine(` ${makeLabel(crop, 'Exp Left')}${addCommas(global.hoeutils.expToMax)}`));
                 if (userSettings.isETAToMaxEnabled) 
-                    displayLines.push(new DisplayLine(` ${makeLabel(crop, 'eta')}${global.hoeutils.etaToMax}`));
                     displayLines.push(new DisplayLine(` ${makeLabel(crop, 'ETA')}${global.hoeutils.etaToMax}`));
             }
             else displayLines.push(new DisplayLine(` ${global.hoeutils.colorSettings.main}You reached the level cap!`));
