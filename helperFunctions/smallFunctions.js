@@ -43,22 +43,27 @@ export function getMaxEfficiencyYield(cropRate, crop, replenishModif = 0) {
     const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag').getCompoundTag('ExtraAttributes');
     let randomDrops = 0;
     let unit = units[global.hoeutils.settings.getSetting('Tool Info', 'Yield Unit')];
-    let unitModif;
+    let unitModif, precisionModif;
     switch(unit) {
         case '/h': 
             unitModif = 20 * 60 * 60;
+            precisionModif = 1;
             break;
         case '/event': 
             unitModif = 20 * 60 * 20;
+            precisionModif = 1;
             break;
         case '/min': 
             unitModif = 20 * 60;
+            precisionModif = 10;
             break;
         case '/s': 
             unitModif = 20;
+            precisionModif = 10;
             break;
         case '/harvest': 
             unitModif = 1;
+            precisionModif = 100;
             break;
     }
     if (heldItem.getString('id').match(/PUMPKIN_DICER/)) {
@@ -67,7 +72,7 @@ export function getMaxEfficiencyYield(cropRate, crop, replenishModif = 0) {
     else if (heldItem.getString('id').match(/MELON_DICER/)) {
         randomDrops = (160*0.00114 + 5*160*0.00043 + 50*160*0.00007 + 2*160*160*0.00001) * unitModif;
     }
-    return addCommas(Math.round((cropRate/100 * baseCropDrops[crop]) * unitModif - replenishModif + randomDrops))+unit;
+    return addCommas(Math.round((cropRate/100 * baseCropDrops[crop] * precisionModif) / precisionModif * unitModif - replenishModif + randomDrops))+unit;
 }
 export function makeTimer(seconds, charsFromStart, amountOfChars) {
     return new Date(seconds * 1000).toISOString().substr(charsFromStart ?? 14, amountOfChars ?? 5);
