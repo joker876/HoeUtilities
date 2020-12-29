@@ -19,15 +19,16 @@ const colorSettingsTemplate = {
 };
 global.hoeutils.colorSettings = colorSettingsTemplate;
 const userSettingsTemplate = {
-    isCounterEnabled: settings.getSetting('Features', 'Counter'),
-    isCropRateEnabled: settings.getSetting('Features', 'Crop Rate'),
-    isMaxEfficiencyEnabled: settings.getSetting('Features', 'Hourly Drops'),
-    isCollectionEnabled: settings.getSetting('Features', 'Collection'),
+    isCounterEnabled: settings.getSetting('Tool Info', 'Counter'),
+    isCropRateEnabled: settings.getSetting('Tool Info', 'Crop Rate'),
+    isMaxEfficiencyEnabled: settings.getSetting('Tool Info', 'Hourly Drops'),
+    isCollectionEnabled: settings.getSetting('Tool Info', 'Collection'),
+    isYawEnabled: settings.getSetting('Tool Info', 'Yaw &8(direction)'),
+    isImageEnabled: settings.getSetting('Tool Info', 'Enable images'),
     isHoeLockEnabled: settings.getSetting('Features', 'Hoe Lock'),
     isEventReminderEnabled: settings.getSetting('Features', 'Event Reminder'),
     isEventTimerEnabled: settings.getSetting('Features', 'Event Timer'),
     isEventTimerEnabledEverywhere: settings.getSetting('Timer', 'Enable everywhere'),
-    isImageEnabled: settings.getSetting('Tool Info', 'Enable images'),
     isEventImageEnabled: settings.getSetting('Timer', 'Enable image'),
     farmingInfo: {
         isLevelEnabled: settings.getSetting('Farming Info', 'Farming Level'),
@@ -62,15 +63,16 @@ export function updateColorSettings() {
 }
 export function updateUserSettings() {
     global.hoeutils.userSettings = {
-        isCounterEnabled: settings.getSetting('Features', 'Counter'),
-        isCropRateEnabled: settings.getSetting('Features', 'Crop Rate'),
-        isMaxEfficiencyEnabled: settings.getSetting('Features', 'Hourly Drops'),
-        isCollectionEnabled: settings.getSetting('Features', 'Collection'),
+        isCounterEnabled: settings.getSetting('Tool Info', 'Counter'),
+        isCropRateEnabled: settings.getSetting('Tool Info', 'Crop Rate'),
+        isMaxEfficiencyEnabled: settings.getSetting('Tool Info', 'Hourly Drops'),
+        isCollectionEnabled: settings.getSetting('Tool Info', 'Collection'),
+        isYawEnabled: settings.getSetting('Tool Info', 'Yaw &8(direction)'),
+        isImageEnabled: settings.getSetting('Tool Info', 'Enable images'),
         isHoeLockEnabled: settings.getSetting('Features', 'Hoe Lock'),
         isEventReminderEnabled: settings.getSetting('Features', 'Event Reminder'),
         isEventTimerEnabled: settings.getSetting('Features', 'Event Timer'),
         isEventTimerEnabledEverywhere: settings.getSetting('Timer', 'Enable everywhere'),
-        isImageEnabled: settings.getSetting('Tool Info', 'Enable images'),
         isEventImageEnabled: settings.getSetting('Timer', 'Enable image'),
         farmingInfo: {
             isLevelEnabled: settings.getSetting('Farming Info', 'Farming Level'),

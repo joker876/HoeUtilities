@@ -23,11 +23,9 @@ export default function initiateSettings() {
     {
         name: 'Features',
         settings: [
-            new Setting.Toggle('Counter', true),
-            new Setting.Toggle('Crop Rate', true),
-            new Setting.Toggle('Hourly Drops', true),
-            new Setting.Toggle('Collection', true),
+            new Setting.Toggle('Tool Info', true),
             new Setting.Toggle('Farming Info', true),
+            new Setting.Toggle('Medals Info', true),
             new Setting.Toggle('Hoe Lock', true),
             new Setting.Toggle('Event Reminder', true),
             new Setting.Toggle('Event Timer', true),
@@ -59,9 +57,15 @@ export default function initiateSettings() {
         name: 'Tool Info',
         settings: [
             new Setting.Button("Click here to move the GUI >>>", "&e&lCLICK!", () => { ChatLib.command('hoeutils gui', true) }),
-            new Setting.Slider('Scale &8in %', 100, 1, 300),
+            new Setting.Toggle('Counter', true),
+            new Setting.Toggle('Crop Rate', true),
+            new Setting.Toggle('Hourly Drops', true),
+            new Setting.Toggle('Collection', true),
+            new Setting.Toggle('Yaw &8(direction)', true),
             new Setting.Toggle('Enable images', true),
+            new Setting.Slider('Scale &8in %', 100, 1, 300),
             new Setting.StringSelector('Yield Unit', 0, Object.keys(units)),
+            new Setting.StringSelector('Yaw Unit', 0, ['Raw Data', 'Angle']),
         ],
     },
     {
