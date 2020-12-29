@@ -66,6 +66,8 @@ export function makeLabel(crop, type) {
     else {
         return `${global.hoeutils.colorSettings[crop]}[${global.hoeutils.colorSettings.main}Crop Rate${global.hoeutils.colorSettings[crop]}]&f: ${global.hoeutils.colorSettings.numbers}`;
     }
+export function makeLabel(crop, string) {
+    return `${global.hoeutils.colorSettings[crop]}[${global.hoeutils.colorSettings.main}${string}${global.hoeutils.colorSettings[crop]}]&f: ${global.hoeutils.colorSettings.numbers}`;
 }
 export function addCommas(str) {
     str = String(str);
@@ -106,6 +108,27 @@ export function getMaxEfficiencyYield(cropRate, crop, replenishModif = 0) {
 export function makeTimer(seconds, charsFromStart, amountOfChars) {
     return new Date(seconds * 1000).toISOString().substr(charsFromStart ?? 14, amountOfChars ?? 5);
 }
+export function calcYaw() {
+    let rawYaw = Math.round(Player.getYaw()*10)/10;
+    let _baseDir = 67.5;
+    let dir = '';
+    if (rawYaw <= _baseDir && rawYaw >= -_baseDir) dir += 'S';
+    if (rawYaw >= _baseDir+45 || rawYaw <= -_baseDir-45) dir += 'N';
+    if (rawYaw >= _baseDir-45 && rawYaw <= _baseDir+90) dir += 'W';
+    if (rawYaw <= -_baseDir+45 && rawYaw >= -_baseDir-90) dir += 'E';
+    if (global.hoeutils.settings.getSetting('Tool Info', 'Yaw Unit') == 'Raw Data') {
+        return rawYaw+(dir != '' ? ` (${dir})` : '');
+    }
+    else {
+        if (rawYaw <= -90) {
+            return Math.round(rawYaw*-10-1800)/10+'°'+(dir != '' ? ` (${dir})` : '');
+        }
+        else if (rawYaw >= 90) {
+            return Math.round(1800-rawYaw*10)/10+'°'+(dir != '' ? ` (${dir})` : '');
+        }
+        else return rawYaw+'°'+(dir != '' ? ` (${dir})` : '');
+    }
+}
 export function produceAllLines(crop, settings = {}) {
     const heldItem = Player.getHeldItem().getItemNBT().getCompoundTag('tag');
     const counter = heldItem.getCompoundTag('ExtraAttributes').getInteger('mined_crops');
@@ -125,6 +148,7 @@ export function produceAllLines(crop, settings = {}) {
     if (!settings.cropRate && global.hoeutils.userSettings.isCropRateEnabled) displayLines.push(new DisplayLine(' '+makeLabel(crop, 'Crop Rate') + (global.hoeutils.farmingLevel ? Math.round(cropRate*100)/100 + '%' : '&cHarvest crops...')));
     if (!settings.maxEff && global.hoeutils.userSettings.isMaxEfficiencyEnabled) displayLines.push(new DisplayLine(' '+makeLabel(crop, 'Max Yield') + (global.hoeutils.farmingLevel ? getMaxEfficiencyYield(cropRate, crop, settings.replenishModif ?? 0) : '&cHarvest crops...')));
     if (!settings.collection && global.hoeutils.userSettings.isCollectionEnabled) displayLines.push(new DisplayLine(' '+makeLabel(crop, 'Collection') + addCommas(calculateCollection(crop, counter))));
+    if (!settings.yaw && global.hoeutils.userSettings.isYawEnabled) displayLines.push(new DisplayLine(` ${makeLabel(crop, 'Yaw')}${calcYaw()}`))
     return displayLines;
 }
 export function produceFarmingLines(crop) {
