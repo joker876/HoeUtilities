@@ -84,7 +84,7 @@ export default function getAPIInfo (type, firstLoad) {
                 global.hoeutils.collections.cactus = profile.collection.CACTUS
             }
             else if (type == 'farming') {
-                const farmingExp = profile.experience_skill_farming
+                const farmingExp = profile.experience_skill_farming;
                 let farmingLevel = 0;
                 skillCurves.forEach(exp => {
                     if (exp <= farmingExp) farmingLevel++;
@@ -94,6 +94,7 @@ export default function getAPIInfo (type, firstLoad) {
                     global.hoeutils.levelCap = 50+(profile.jacob2.perks.farming_level_cap || 0);
                     global.hoeutils.anitaBonus = profile.jacob2.perks.double_drops || 0;
                 }
+                global.hoeutils.medals = profile.jacob2.medals_inv || null;
             }
         }).catch(() => global.hoeutils.isCollectionError = 1200);
     }).catch(() => global.hoeutils.isCollectionError = 1200);
