@@ -14,7 +14,7 @@ export default function initiateSettings() {
             new Setting.Button("&eDawJaw", "Help with crop rate formula", () => {}),
             new Setting.Button("", "", () => {}),
             new Setting.Button("", "", () => {}),
-            new Setting.Button("", "", () => {}),
+            new Setting.Button("Do you like the module? Support the creator!", "&a&lPAYPAL", () => { ChatLib.command('hoeutils donate', true) }),
             new Setting.Button("Wanna suggest something? Join my &3Discord &fserver!", '&a&lLINK!', () => { ChatLib.command('hoeutils discord', true) }),
             new Setting.Button("", "", () => {}),
             new Setting.Button("&c&lNote: &rall mods are &9&nuse at own risk.", "", () => {}),

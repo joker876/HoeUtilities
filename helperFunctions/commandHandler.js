@@ -24,6 +24,12 @@ export function commandHandler(...args) {
             }
             break;
         }
+        case 'donate': {
+            if(Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(new URI('paypal.me/joker876'));
+            }
+            break;
+        }
         case 'testsound': {
             let [ sfx, volume, pitch ] = cmdData;
             World.playSound(sfx || 'random.orb', volume || 1000, pitch || 1);
