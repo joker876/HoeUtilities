@@ -16,10 +16,10 @@ const sendRequest = (url) => {
 }
 export default function getAPIInfo (type, firstLoad) {
     global.hoeutils.debug.getCollectionsStages = {};
-    if (!global.hoeutils.data.key) return;
+    if (!global.hoeutils.data.key.key) return;
     let uuid = Player.getUUID()
     global.hoeutils.debug.getCollectionsStages.uuid = uuid;
-    global.hoeutils.debug.getCollectionsStages.key = global.hoeutils.data.key;
+    global.hoeutils.debug.getCollectionsStages.key = global.hoeutils.data.key.key;
     
 
     sendRequest("https://api.hypixel.net/player?key=" + global.hoeutils.data.key + "&uuid=" + uuid)
