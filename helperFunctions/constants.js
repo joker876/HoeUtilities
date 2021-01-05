@@ -109,7 +109,7 @@ export const baseCropDrops = {
 }
 
 export const dataFileStructure = {
-    key: null,
+    key: { key: null, disableWarning: false },
     hud: { x: 20, y: 5 }, 
     timer: { x: Renderer.screen.getWidth() - 40, y: 5 },
     farming: { x: Renderer.screen.getWidth() - 175, y: 5 },
