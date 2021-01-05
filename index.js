@@ -71,7 +71,7 @@ register('step', () => getAPIInfo('collection')).setDelay(240);
 register('step', () => getAPIInfo('farming')).setDelay(60);
 register('worldLoad', () => { getAPIInfo('collection'); getAPIInfo('farming') })
 register('step', () => {
-    if (!global.hoeutils.data.key) {
+    if (!global.hoeutils.data.key.key) {
         ChatLib.chat('&cPlease set your API key! Use &f/api new &ccommand or &f/hoeutils key <your key> &cto do so.');
     }
 }).setDelay(240);
